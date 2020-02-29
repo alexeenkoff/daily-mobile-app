@@ -8,7 +8,10 @@ class PostsClientImpl extends PostsClient {
       cache: InMemoryCache());
 
   @override
-  Future<List<PostResponse>> getPosts() {
+  Future<List<PostResponse>> getPosts(List<String> tags, [DateTime dateTime]) {
+    if (dateTime == null) {
+      dateTime = DateTime.now();
+    }
     final fetchLatest = r'''
     query fetchLatest($params: QueryPostInput) { latest(params: $params) {
       id,title,url,publishedAt,createdAt,image,ratio,placeholder,views,readTime,publication { id, name, image },
@@ -20,7 +23,7 @@ class PostsClientImpl extends PostsClient {
         documentNode: gql(fetchLatest),
         variables: <String, dynamic>{
           'params': {
-            'latest': '2020-02-29T15:33:31.321Z',
+            'latest': '${dateTime.toIso8601String()}',
             'page': 0,
             'pageSize': 30,
             'pubs': "",

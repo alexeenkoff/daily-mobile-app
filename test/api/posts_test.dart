@@ -17,11 +17,16 @@ void main() {
   });
 
   test('check posts rest client', () async {
-    final posts = await restClient.getPosts();
+    final posts = await restClient.getPosts(List(), DateTime.now());
     expect(posts, isNotNull);
     var firstPost = posts[0];
     expect(firstPost.url, isNotNull);
     expect(firstPost.publication, isNotNull);
     expect(firstPost.title, isNotNull);
+  });
+
+  test('check posts api client with no datetime', () async {
+    final posts = await restClient.getPosts(List());
+    expect(posts[0], isNotNull);
   });
 }

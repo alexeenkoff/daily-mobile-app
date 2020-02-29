@@ -38,7 +38,7 @@ class ApiClientImpl implements ApiClient {
   }
 
   @override
-  Future<List<PostResponse>> getPosts() {
-    return _postsClient.getPosts();
+  Future<List<PostResponse>> getPosts(List<String> tags, [DateTime dateTime]) {
+    return _postsClient.getPosts(tags, dateTime);
   }
 }
