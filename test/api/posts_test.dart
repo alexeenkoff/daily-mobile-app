@@ -17,7 +17,7 @@ void main() {
   });
 
   test('check posts rest client', () async {
-    final posts = await restClient.getPosts(List(), DateTime.now());
+    final posts = await restClient.getPosts(List(), 0, 10, DateTime.now());
     expect(posts, isNotNull);
     var firstPost = posts[0];
     expect(firstPost.url, isNotNull);
@@ -26,18 +26,33 @@ void main() {
   });
 
   test('check posts api client with no datetime', () async {
-    final posts = await restClient.getPosts(List());
+    final posts = await restClient.getPosts(List(), 0, 10);
     expect(posts[0], isNotNull);
   });
 
   test('check posts api client with tags', () async {
-    final posts = await restClient
-        .getPosts(['flutter', 'kotlin', 'android', 'dart', 'microservices']);
+    final posts = await restClient.getPosts(
+        ['flutter', 'kotlin', 'android', 'dart', 'microservices'], 0, 10);
     expect(posts.length, isNot(0));
   });
 
   test('check posts api client with one tag', () async {
-    final posts = await restClient.getPosts(['flutter']);
+    final posts = await restClient.getPosts(['flutter'], 0, 10);
     expect(posts.length, isNot(0));
+  });
+
+  test('check posts api client by page count', () async {
+    final count = 13;
+    final posts = await restClient.getPosts(
+        ['flutter', 'kotlin', 'android', 'dart', 'microservices'], 0, count);
+    expect(posts.length, count);
+  });
+
+  test('check post api client pages', () async {
+    final postsFirstPage = await restClient.getPosts(
+        ['flutter', 'kotlin', 'android', 'dart', 'microservices'], 0, 10);
+    final postsSecondPage = await restClient.getPosts(
+        ['flutter', 'kotlin', 'android', 'dart', 'microservices'], 1, 10);
+    assert(postsFirstPage[0].id != postsSecondPage[0].id);
   });
 }

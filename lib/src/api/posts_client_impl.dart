@@ -1,7 +1,6 @@
 import 'package:daily_mobile_app/src/api/model/post_response.dart';
 import 'package:daily_mobile_app/src/api/posts_client.dart';
 import 'package:graphql/client.dart';
-import 'dart:convert' as json;
 
 class PostsClientImpl extends PostsClient {
   final _client = GraphQLClient(
@@ -9,7 +8,9 @@ class PostsClientImpl extends PostsClient {
       cache: InMemoryCache());
 
   @override
-  Future<List<PostResponse>> getPosts(List<String> tags, [DateTime dateTime]) {
+  Future<List<PostResponse>> getPosts(
+      List<String> tags, int page, int pageCount,
+      [DateTime dateTime]) {
     if (dateTime == null) {
       dateTime = DateTime.now();
     }
@@ -25,8 +26,8 @@ class PostsClientImpl extends PostsClient {
         variables: <String, dynamic>{
           'params': {
             'latest': '${dateTime.toIso8601String()}',
-            'page': 0,
-            'pageSize': 30,
+            'page': page,
+            'pageSize': pageCount,
             'pubs': "",
             'sortBy': 'popularity',
             'tags': '${_tagsToString(tags)}'
