@@ -1,12 +1,12 @@
-import 'package:daily_mobile_app/src/rest/rest_clent.dart';
-import 'package:daily_mobile_app/src/rest/rest_client_impl.dart';
+import 'package:daily_mobile_app/src/api/api_client.dart';
+import 'package:daily_mobile_app/src/api/api_client_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 
 void main() {
-  RestClient restClient;
+  ApiClient restClient;
   setUp(() {
-    restClient = RestClientImpl();
+    restClient = ApiClientImpl();
   });
 
   test('check popular tags', () async {
