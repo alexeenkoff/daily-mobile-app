@@ -1,5 +1,5 @@
 import 'package:daily_mobile_app/src/rest/model/publication_response.dart';
-import 'package:daily_mobile_app/src/rest/rest_client.dart';
+import 'package:daily_mobile_app/src/rest/rest_client_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 
