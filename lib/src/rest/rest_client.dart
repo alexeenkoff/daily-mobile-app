@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:daily_mobile_app/src/rest/model/popular_response.dart';
+import 'package:daily_mobile_app/src/rest/model/popular_tag_response.dart';
 import 'package:daily_mobile_app/src/rest/model/publication_response.dart';
 import 'package:daily_mobile_app/src/rest/rest_clent_interface.dart';
 import 'package:http/http.dart' as http;
@@ -23,13 +23,13 @@ class RestClientImpl implements RestClient {
   }
 
   @override
-  Future<List<PopularResponse>> getPopular() {
-    return Future<List<PopularResponse>>(() {
+  Future<List<TagResponse>> getPopularTags() {
+    return Future<List<TagResponse>>(() {
       return http.get(_baseUrl + 'tags/popular')
           .then((response) {
         final List resultJson = json.jsonDecode(response.body) as List;
         return Future.value(resultJson.map((json) =>
-            PopularResponse.fromJson(json)).toList());
+            TagResponse.fromJson(json)).toList());
         });
     });
   }

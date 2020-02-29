@@ -9,14 +9,14 @@ void main() {
     restClient = RestClientImpl();
   });
 
-  test('check popular', () async {
+  test('check popular tags', () async {
     final url = 'https://app.dailynow.co/v1/tags/popular';
     final response = await http.get(url);
     expect(response.statusCode, 200);
   });
 
-  test('check rest client popular', () async {
-    final tags = await restClient.getPopular();
+  test('check rest client popular tags', () async {
+    final tags = await restClient.getPopularTags();
     expect(tags, isNotNull);
   });
 }
