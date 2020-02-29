@@ -10,9 +10,9 @@ void main() {
     expect(response.statusCode, 200);
   });
 
-  RestClient restClient;
+  RestClientImpl restClient;
   setUp(() {
-    restClient = RestClient();
+    restClient = RestClientImpl();
   });
 
   test('check rest client publications', () async {
