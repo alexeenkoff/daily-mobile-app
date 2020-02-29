@@ -1,6 +1,7 @@
 import 'package:daily_mobile_app/src/api/model/post_response.dart';
 import 'package:daily_mobile_app/src/api/posts_client.dart';
 import 'package:graphql/client.dart';
+import 'dart:convert' as json;
 
 class PostsClientImpl extends PostsClient {
   final _client = GraphQLClient(
@@ -28,7 +29,7 @@ class PostsClientImpl extends PostsClient {
             'pageSize': 30,
             'pubs': "",
             'sortBy': 'popularity',
-            'tags': 'flutter,kotlin,android,dart,microservices,news'
+            'tags': '${_tagsToString(tags)}'
           }
         });
     return _client.query(options).then((queryResult) {
@@ -36,5 +37,16 @@ class PostsClientImpl extends PostsClient {
       final result = list.map((json) => PostResponse.fromJson(json)).toList();
       return Future.value(result);
     });
+  }
+
+  String _tagsToString(List<String> tags) {
+    final buffer = StringBuffer();
+    for (int x = 0; x < tags.length; x++) {
+      buffer.write(tags[x]);
+      if (x != tags.length - 1) {
+        buffer.write(',');
+      }
+    }
+    return buffer.toString();
   }
 }

@@ -29,4 +29,15 @@ void main() {
     final posts = await restClient.getPosts(List());
     expect(posts[0], isNotNull);
   });
+
+  test('check posts api client with tags', () async {
+    final posts = await restClient
+        .getPosts(['flutter', 'kotlin', 'android', 'dart', 'microservices']);
+    expect(posts.length, isNot(0));
+  });
+
+  test('check posts api client with one tag', () async {
+    final posts = await restClient.getPosts(['flutter']);
+    expect(posts.length, isNot(0));
+  });
 }
