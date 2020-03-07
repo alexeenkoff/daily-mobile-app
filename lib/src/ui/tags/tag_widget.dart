@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer' as developer;
 
 class TagWidget extends StatefulWidget {
   final String text;
@@ -11,10 +12,12 @@ class TagWidget extends StatefulWidget {
 }
 
 class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
+  final white = Color.fromARGB(255, 255, 255, 255);
+  final dark = Color.fromARGB(255, 46, 47, 52);
   final String _text;
   AnimationController _controller;
-  Animation<Color> _selectAnimation;
-  Animation<Color> _unselectAnimation;
+  Animation<Color> _backgroundColorAnimation;
+  Animation<Color> _textColorAnimation;
   bool _selected = false;
 
   _TagState(this._text) : super();
@@ -24,17 +27,15 @@ class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     _controller =
-        AnimationController(duration: Duration(milliseconds: 200), vsync: this);
-    _selectAnimation = ColorTween(
-            begin: Color.fromARGB(255, 46, 47, 52),
-            end: Color.fromARGB(255, 255, 255, 255))
+        AnimationController(duration: Duration(milliseconds: 100), vsync: this);
+    _backgroundColorAnimation = ColorTween(
+            begin: _selected ? white : dark, end: _selected ? dark : white)
         .animate(_controller)
           ..addListener(() {
             setState(() {});
           });
-    _unselectAnimation = ColorTween(
-            begin: Color.fromARGB(255, 255, 255, 255),
-            end: Color.fromARGB(255, 46, 47, 52))
+    _textColorAnimation = ColorTween(
+            begin: _selected ? dark : white, end: _selected ? white : dark)
         .animate(_controller)
           ..addListener(() {
             setState(() {});
@@ -48,21 +49,27 @@ class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
       child: Container(
           decoration: BoxDecoration(
               shape: BoxShape.rectangle,
-              border: Border.all(color: Color.fromARGB(255, 255, 255, 255)),
-              color: _selectAnimation.value,
+              border: Border.all(color: white),
+              color: _backgroundColorAnimation.value,
               borderRadius: BorderRadius.all(Radius.circular(4.0))),
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Text(
             _text,
-            style: TextStyle(color: Color.fromARGB(255, 247, 247, 247)),
+            style: TextStyle(color: _textColorAnimation.value),
           )),
       onTap: _onWidgetClick,
     );
   }
 
-  void _onWidgetClick(){
+  void _onWidgetClick() {
     _selected = _selected ? false : true;
-    _controller.forward();
+
+    developer.log('_selected = $_selected');
+    if (_selected) {
+      _controller.reverse();
+    } else {
+      _controller.forward();
+    }
   }
 
   @override
@@ -71,18 +78,3 @@ class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 }
-
-//@override
-//Widget build(BuildContext context) {
-//  return Container(
-//      decoration: BoxDecoration(
-//          shape: BoxShape.rectangle,
-//          border: Border.all(color: Color.fromARGB(255, 255, 255, 255)),
-//          color: Color.fromARGB(255, 46, 47, 52),
-//          borderRadius: BorderRadius.all(Radius.circular(4.0))),
-//      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-//      child: Text(
-//        _text,
-//        style: TextStyle(color: Color.fromARGB(255, 247, 247, 247)),
-//      ));
-//}
