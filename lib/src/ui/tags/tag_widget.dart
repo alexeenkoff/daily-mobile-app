@@ -18,7 +18,7 @@ class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Animation<Color> _backgroundColorAnimation;
   Animation<Color> _textColorAnimation;
-  bool _selected = false;
+  bool _selected = true;
 
   _TagState(this._text) : super();
 
@@ -62,14 +62,12 @@ class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
   }
 
   void _onWidgetClick() {
-    _selected = _selected ? false : true;
-
-    developer.log('_selected = $_selected');
-    if (_selected) {
-      _controller.reverse();
-    } else {
+    _selected = !_selected;
+    if (_controller.status != AnimationStatus.completed) {
       _controller.forward();
     }
+    else _controller.reverse();
+    developer.log('_selected = $_selected');
   }
 
   @override
