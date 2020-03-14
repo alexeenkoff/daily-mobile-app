@@ -12,8 +12,6 @@ class TagWidget extends StatefulWidget {
 }
 
 class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
-  final white = Color.fromARGB(255, 255, 255, 255);
-  final dark = Color.fromARGB(255, 46, 47, 52);
   final String _text;
   AnimationController _controller;
   Animation<Color> _backgroundColorAnimation;
@@ -26,36 +24,25 @@ class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
 
   @override
   void initState() {
+    super.initState();
     _controller =
         AnimationController(duration: Duration(milliseconds: 100), vsync: this);
-    _backgroundColorAnimation = ColorTween(
-            begin: _selected ? white : dark, end: _selected ? dark : white)
-        .animate(_controller)
-          ..addListener(() {
-            setState(() {});
-          });
-    _textColorAnimation = ColorTween(
-            begin: _selected ? dark : white, end: _selected ? white : dark)
-        .animate(_controller)
-          ..addListener(() {
-            setState(() {});
-          });
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+//    _initColors(context);
     return GestureDetector(
       child: Container(
           decoration: BoxDecoration(
               shape: BoxShape.rectangle,
-              border: Border.all(color: white),
-              color: _backgroundColorAnimation.value,
+              border: Border.all(color: Theme.of(context).accentColor),
+              color: _backgroundAnimation(Theme.of(context)).value,
               borderRadius: BorderRadius.all(Radius.circular(4.0))),
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Text(
             _text,
-            style: TextStyle(color: _textColorAnimation.value),
+            style: TextStyle(color: _textAnimation(Theme.of(context)).value),
           )),
       onTap: _onWidgetClick,
     );
@@ -65,9 +52,35 @@ class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
     _selected = !_selected;
     if (_controller.status != AnimationStatus.completed) {
       _controller.forward();
-    }
-    else _controller.reverse();
+    } else
+      _controller.reverse();
     developer.log('_selected = $_selected');
+  }
+
+  Animation<Color> _backgroundAnimation(ThemeData themeData) {
+    if (_backgroundColorAnimation == null) {
+      _backgroundColorAnimation = ColorTween(
+              begin: _selected ? themeData.accentColor : themeData.primaryColor,
+              end: _selected ? themeData.primaryColor : themeData.accentColor)
+          .animate(_controller)
+            ..addListener(() {
+              setState(() {});
+            });
+    }
+    return _backgroundColorAnimation;
+  }
+
+  Animation<Color> _textAnimation(ThemeData themeData) {
+    if (_textColorAnimation == null) {
+      _textColorAnimation = ColorTween(
+              begin: _selected ? themeData.primaryColor : themeData.accentColor,
+              end: _selected ? themeData.accentColor : themeData.primaryColor)
+          .animate(_controller)
+            ..addListener(() {
+              setState(() {});
+            });
+    }
+    return _textColorAnimation;
   }
 
   @override
