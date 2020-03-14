@@ -53,18 +53,27 @@ class _MyHomePageState extends State<MyHomePage> {
                   Expanded(flex: 4, child: TagSearch())
                 ],
               ),
-              Center(
-                // Center is a layout widget. It takes a single child and positions it
-                // in the middle of the parent.
-                child: Padding(
-                  padding: EdgeInsets.only(top: 24.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(top: 24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
 //            ),
-                      TagWidget('#android-development'),
-                    ],
-                  ),
+                    Wrap(
+                      spacing: 10,
+                      runSpacing: 10,
+                      children: <Widget>[
+                        TagWidget('#android-development'),
+                        TagWidget('#iOS-development'),
+                        TagWidget('#flutter-development'),
+                        TagWidget('#news'),
+                        TagWidget('#kubernetes'),
+                        TagWidget('#tech'),
+                        TagWidget('#ai'),
+                        TagWidget('#webdev'),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ],
