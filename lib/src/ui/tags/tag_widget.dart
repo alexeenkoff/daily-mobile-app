@@ -60,8 +60,8 @@ class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
   Animation<Color> _backgroundAnimation(ThemeData themeData) {
     if (_backgroundColorAnimation == null) {
       _backgroundColorAnimation = ColorTween(
-              begin: _selected ? themeData.accentColor : themeData.primaryColor,
-              end: _selected ? themeData.primaryColor : themeData.accentColor)
+              begin: _selected ? themeData.accentColor : themeData.backgroundColor,
+              end: _selected ? themeData.backgroundColor : themeData.accentColor)
           .animate(_controller)
             ..addListener(() {
               setState(() {});
