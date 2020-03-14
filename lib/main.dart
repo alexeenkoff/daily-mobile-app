@@ -1,4 +1,4 @@
-import 'package:daily_mobile_app/src/ui/tag_counter_widget.dart';
+import 'package:daily_mobile_app/src/ui/tags/tag_counter_widget.dart';
 import 'package:daily_mobile_app/src/ui/tags/tag_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -39,16 +39,17 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
-      body: Padding(
-        padding: EdgeInsets.only(top: 64.0),
-        child: IntrinsicHeight(
+      body: IntrinsicHeight(
+        child: Container(
+          margin: EdgeInsets.only(left: 16.0, right: 16.0, top: 64.0),
           child: Column(
             children: <Widget>[
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  TagCounter(),
-                  TagCounter()
+                  Expanded(flex: 1, child: TagCounter()),
+                  Container(margin: EdgeInsets.only(left: 8, right: 8)),
+                  Expanded(flex: 4, child: TagCounter())
                 ],
               ),
               Center(
@@ -59,12 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-//            Text(
-//              'You have pushed the button this many times:',
-//            ),
-//            Text(
-//              '$_counter',
-//              style: Theme.of(context).textTheme.display1,
 //            ),
                       TagWidget('#android-development'),
                     ],
