@@ -1,4 +1,5 @@
 import 'package:daily_mobile_app/src/ui/tags/tag_counter_widget.dart';
+import 'package:daily_mobile_app/src/ui/tags/tag_search_widget.dart';
 import 'package:daily_mobile_app/src/ui/tags/tag_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -49,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   Expanded(flex: 1, child: TagCounter()),
                   Container(margin: EdgeInsets.only(left: 8, right: 8)),
-                  Expanded(flex: 4, child: TagCounter())
+                  Expanded(flex: 4, child: TagSearch())
                 ],
               ),
               Center(
