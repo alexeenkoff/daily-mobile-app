@@ -1,3 +1,5 @@
+import 'package:daily_mobile_app/src/ui/tags/tag_counter_widget.dart';
+import 'package:daily_mobile_app/src/ui/tags/tag_search_widget.dart';
 import 'package:daily_mobile_app/src/ui/tags/tag_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -27,43 +29,64 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  GlobalKey<TagCounterState> _tagCounterKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-//            Text(
-//              'You have pushed the button this many times:',
+      backgroundColor: Theme.of(context).backgroundColor,
+      body: IntrinsicHeight(
+        child: Container(
+          margin: EdgeInsets.only(left: 16.0, right: 16.0, top: 64.0),
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(flex: 1, child: TagCounter(key: _tagCounterKey)),
+                  Container(margin: EdgeInsets.only(left: 8, right: 8)),
+                  Expanded(flex: 4, child: TagSearch())
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 24.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
 //            ),
-//            Text(
-//              '$_counter',
-//              style: Theme.of(context).textTheme.display1,
-//            ),
-            TagWidget('#android-development'),
-          ],
+                    Wrap(
+                      spacing: 10,
+                      runSpacing: 10,
+                      children: <Widget>[
+                        TagWidget('#android-development', _onTagPress),
+                        TagWidget('#iOS-development', _onTagPress),
+                        TagWidget('#flutter-development', _onTagPress),
+                        TagWidget('#news', _onTagPress),
+                        TagWidget('#kubernetes', _onTagPress),
+                        TagWidget('#tech', _onTagPress),
+                        TagWidget('#ai', _onTagPress),
+                        TagWidget('#webdev', _onTagPress),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  _onTagPress(TagPressedResult result) {
+    setState(() {
+      result.checked ? _counter++ : _counter--;
+      _tagCounterKey.currentState
+          .updateCount(_counter);
+    });
   }
 }
