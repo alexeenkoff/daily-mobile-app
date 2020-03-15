@@ -4,23 +4,28 @@ import 'dart:developer' as developer;
 
 class TagWidget extends StatefulWidget {
   final String text;
+  final ValueChanged<TagPressedResult> onPressed;
 
-  TagWidget(this.text, {Key key}) : super(key: key);
+  TagWidget(this.text, ValueChanged<TagPressedResult> onPressed, {Key key})
+      : this.onPressed = onPressed,
+        super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _TagState(text);
+  State<StatefulWidget> createState() => _TagState();
+}
+
+class TagPressedResult {
+  final String text;
+  final bool checked;
+
+  TagPressedResult(this.text, this.checked);
 }
 
 class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
-  final String _text;
   AnimationController _controller;
   Animation<Color> _backgroundColorAnimation;
   Animation<Color> _textColorAnimation;
-  bool _selected = true;
-
-  _TagState(this._text) : super();
-
-  String get text => _text;
+  bool _selected = false;
 
   @override
   void initState() {
@@ -31,7 +36,6 @@ class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-//    _initColors(context);
     return GestureDetector(
       child: Container(
           decoration: BoxDecoration(
@@ -41,7 +45,7 @@ class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
               borderRadius: BorderRadius.all(Radius.circular(4.0))),
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
           child: Text(
-            _text,
+            widget.text,
             style: TextStyle(color: _textAnimation(Theme.of(context)).value),
           )),
       onTap: _onWidgetClick,
@@ -55,13 +59,16 @@ class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
     } else
       _controller.reverse();
     developer.log('_selected = $_selected');
+    widget.onPressed(TagPressedResult(widget.text, _selected));
   }
 
   Animation<Color> _backgroundAnimation(ThemeData themeData) {
     if (_backgroundColorAnimation == null) {
       _backgroundColorAnimation = ColorTween(
-              begin: _selected ? themeData.accentColor : themeData.backgroundColor,
-              end: _selected ? themeData.backgroundColor : themeData.accentColor)
+              begin:
+                  _selected ? themeData.accentColor : themeData.backgroundColor,
+              end:
+                  _selected ? themeData.backgroundColor : themeData.accentColor)
           .animate(_controller)
             ..addListener(() {
               setState(() {});

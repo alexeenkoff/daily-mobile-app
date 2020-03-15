@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Expanded(flex: 1, child: TagCounter()),
+                  Expanded(flex: 1, child: TagCounter(_counter)),
                   Container(margin: EdgeInsets.only(left: 8, right: 8)),
                   Expanded(flex: 4, child: TagSearch())
                 ],
@@ -63,14 +63,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       spacing: 10,
                       runSpacing: 10,
                       children: <Widget>[
-                        TagWidget('#android-development'),
-                        TagWidget('#iOS-development'),
-                        TagWidget('#flutter-development'),
-                        TagWidget('#news'),
-                        TagWidget('#kubernetes'),
-                        TagWidget('#tech'),
-                        TagWidget('#ai'),
-                        TagWidget('#webdev'),
+                        TagWidget('#android-development', _onTagPress),
+                        TagWidget('#iOS-development', _onTagPress),
+                        TagWidget('#flutter-development', _onTagPress),
+                        TagWidget('#news', _onTagPress),
+                        TagWidget('#kubernetes', _onTagPress),
+                        TagWidget('#tech', _onTagPress),
+                        TagWidget('#ai', _onTagPress),
+                        TagWidget('#webdev', _onTagPress),
                       ],
                     ),
                   ],
@@ -86,5 +86,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  _onTagPress(TagPressedResult result) {
+    setState(() {
+      result.checked ? _counter++ : _counter--;
+    });
   }
 }
