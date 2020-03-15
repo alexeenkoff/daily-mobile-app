@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TagCounter extends StatefulWidget {
-  final int _count;
 
-  TagCounter(this._count, {Key key}) : super(key: key);
+  TagCounter({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => TagCounterState();
@@ -12,6 +11,13 @@ class TagCounter extends StatefulWidget {
 
 class TagCounterState extends State<TagCounter> {
   final _max = 5;
+  var _count = 0;
+
+  updateCount(int count) {
+    setState(() {
+      this._count = count;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +28,7 @@ class TagCounterState extends State<TagCounter> {
           borderRadius: BorderRadius.all(Radius.circular(8.0))),
       padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 12.0),
       child: Text(
-        '${widget._count}/$_max',
+        '$_count/$_max',
         style: TextStyle(color: Theme.of(context).accentColor),
         textAlign: TextAlign.center,
       ),

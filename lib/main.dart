@@ -29,12 +29,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  GlobalKey<TagCounterState> _tagCounterKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Expanded(flex: 1, child: TagCounter(_counter)),
+                  Expanded(flex: 1, child: TagCounter(key: _tagCounterKey)),
                   Container(margin: EdgeInsets.only(left: 8, right: 8)),
                   Expanded(flex: 4, child: TagSearch())
                 ],
@@ -81,7 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
@@ -91,6 +85,8 @@ class _MyHomePageState extends State<MyHomePage> {
   _onTagPress(TagPressedResult result) {
     setState(() {
       result.checked ? _counter++ : _counter--;
+      _tagCounterKey.currentState
+          .updateCount(_counter);
     });
   }
 }
