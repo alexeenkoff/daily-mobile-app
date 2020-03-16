@@ -1,6 +1,7 @@
 import 'package:daily_mobile_app/src/api/api_client.dart';
 import 'package:daily_mobile_app/src/api/api_client_impl.dart';
 import 'package:daily_mobile_app/src/data/repository/tag_rep_impl.dart';
+import 'package:daily_mobile_app/src/data/service/tag/tag_service.dart';
 import 'package:daily_mobile_app/src/domain/interfaces/tag_repositoty.dart';
 import 'package:daily_mobile_app/src/ui/tags/tags_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,7 +16,10 @@ class Application extends StatelessWidget {
     return Injector(
         inject: [
           Inject<ApiClient>(() => ApiClientImpl()),
-          Inject<TagRepository>(() => TagRepositoryImpl(Injector.get()))
+          Inject<TagRepository>(() => TagRepositoryImpl(Injector.get())),
+
+          //States
+          Inject<TagService>(() => TagService(Injector.get()))
         ],
         builder: (_) => MaterialApp(
               title: 'Daily',

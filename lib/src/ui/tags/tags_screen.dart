@@ -1,4 +1,6 @@
+import 'package:daily_mobile_app/src/data/service/tag/tag_service.dart';
 import 'package:flutter/material.dart';
+import 'package:states_rebuilder/states_rebuilder.dart';
 
 import 'widget/tag_counter_widget.dart';
 import 'widget/tag_search_widget.dart';
@@ -15,6 +17,7 @@ class TagsPage extends StatefulWidget {
 class _TagsPageState extends State<TagsPage> {
   int _counter = 0;
   GlobalKey<TagCounterState> _tagCounterKey = GlobalKey();
+  final tagServiceRM = Injector.getAsReactive<TagService>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,47 +26,64 @@ class _TagsPageState extends State<TagsPage> {
       body: IntrinsicHeight(
         child: Container(
           margin: EdgeInsets.only(left: 16.0, right: 16.0, top: 64.0),
-          child: Column(
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 16.0),
+              child: Column(
                 children: <Widget>[
-                  Expanded(flex: 1, child: TagCounter(key: _tagCounterKey)),
-                  Container(margin: EdgeInsets.only(left: 8, right: 8)),
-                  Expanded(flex: 4, child: TagSearch())
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Expanded(flex: 1, child: TagCounter(key: _tagCounterKey)),
+                      Container(margin: EdgeInsets.only(left: 8, right: 8)),
+                      Expanded(flex: 4, child: TagSearch())
+                    ],
+                  ),
+                  WhenRebuilder<TagService>(
+                    // ignore: missing_return
+                    models: [tagServiceRM],
+                    initState: (_, service) =>
+                        service.setState((s) => s.popularTags()),
+                    // ignore: missing_return
+                    onIdle: () => Container(),
+                    onWaiting: () => CircularProgressIndicator(),
+                    onError: (error) => Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(color: Colors.blue),
+                    ),
+                    onData: (tagService) {
+                      return StateBuilder(
+                        models: [tagServiceRM],
+                        builder: (_, __) {
+                          return Container(
+                            margin: EdgeInsets.only(top: 24.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Wrap(
+                                  alignment: WrapAlignment.center,
+                                  spacing: 8,
+                                  runSpacing: 16,
+                                  children: tagService.tags
+                                      .map((tag) =>
+                                          TagWidget('#' + tag.text, _onTagPress))
+                                      .toList(),
+//                              ],
+                                )
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 24.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-//            ),
-                    Wrap(
-                      spacing: 10,
-                      runSpacing: 10,
-                      children: <Widget>[
-                        TagWidget('#android-development', _onTagPress),
-                        TagWidget('#iOS-development', _onTagPress),
-                        TagWidget('#flutter-development', _onTagPress),
-                        TagWidget('#news', _onTagPress),
-                        TagWidget('#kubernetes', _onTagPress),
-                        TagWidget('#tech', _onTagPress),
-                        TagWidget('#ai', _onTagPress),
-                        TagWidget('#webdev', _onTagPress),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 

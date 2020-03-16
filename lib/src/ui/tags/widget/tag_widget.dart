@@ -31,7 +31,7 @@ class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     _controller =
-        AnimationController(duration: Duration(milliseconds: 100), vsync: this);
+        AnimationController(duration: Duration(milliseconds: 50), vsync: this);
   }
 
   @override
