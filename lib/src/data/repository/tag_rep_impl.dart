@@ -16,4 +16,11 @@ class TagRepositoryImpl extends TagRepository {
       });
     });
   }
+
+  @override
+  Future<List<Tag>> searchTag(String query) {
+    return _apiClient.searchTags(query).then((tags) {
+      return tags.map((tagResponse) => Tag(tagResponse.name)).toList();
+    });
+  }
 }

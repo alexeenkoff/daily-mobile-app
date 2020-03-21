@@ -1,12 +1,39 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TagSearch extends StatefulWidget {
+  const TagSearch(
+    this._searchFun, {
+    Key key,
+  }) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => TagSearchState();
+  State<StatefulWidget> createState() => TagSearchState(_searchFun);
+  final ValueChanged<String> _searchFun;
 }
 
 class TagSearchState extends State<TagSearch> {
+  final ValueChanged<String> _searchFun;
+  final _searchController = TextEditingController();
+  Timer _debounce;
+
+  TagSearchState(this._searchFun);
+
+  @override
+  void initState() {
+    _searchController.addListener(_searchListener);
+    super.initState();
+  }
+
+  _searchListener() {
+    if (_debounce?.isActive ?? false) _debounce.cancel();
+    _debounce = Timer(const Duration(milliseconds: 1000), () {
+      _searchFun(_searchController.text);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,6 +50,7 @@ class TagSearchState extends State<TagSearch> {
                   child: Icon(Icons.search)),
               Expanded(
                 child: TextField(
+                  controller: _searchController,
                   decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.only(left: 8.0, right: 8.0, bottom: 4.0),
@@ -34,5 +62,12 @@ class TagSearchState extends State<TagSearch> {
             ],
           ),
         ));
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_searchListener);
+    _searchController.dispose();
+    super.dispose();
   }
 }

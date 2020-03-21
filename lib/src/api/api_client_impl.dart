@@ -43,4 +43,19 @@ class ApiClientImpl implements ApiClient {
       [DateTime dateTime]) {
     return _postsClient.getPosts(tags, page, pageCount, dateTime);
   }
+
+  @override
+  Future<List<TagResponse>> searchTags(String query) {
+    return Future<List<TagResponse>>(() {
+      return http
+          .get(_baseUrl + 'tags/search' + '?query=$query')
+          .then((response) {
+        final responseJson =
+            json.jsonDecode(response.body) as Map<String, dynamic>;
+        final List resultJson = responseJson['hits'] as List<dynamic>;
+        return Future.value(
+            resultJson.map((json) => TagResponse.fromJson(json)).toList());
+      });
+    });
+  }
 }

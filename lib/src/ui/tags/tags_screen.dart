@@ -22,19 +22,26 @@ class _TagsPageState extends State<TagsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme
+          .of(context)
+          .backgroundColor,
       body: Container(
         margin: EdgeInsets.only(left: 16.0, right: 16.0, top: 64.0),
         child: Container(
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(flex: 1, child: TagCounter(key: _tagCounterKey)),
-                  Container(margin: EdgeInsets.only(left: 8, right: 8)),
-                  Expanded(flex: 4, child: TagSearch())
+          Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Expanded(flex: 1, child: TagCounter(key: _tagCounterKey)),
+              Container(margin: EdgeInsets.only(left: 8, right: 8)),
+              Expanded(
+                flex: 4,
+                child: TagSearch(
+                        (query) =>
+                        tagServiceRM.setState((state) =>
+                            state.searchTags(query))))
                 ],
               ),
               WhenRebuilder<TagService>(
@@ -44,13 +51,16 @@ class _TagsPageState extends State<TagsPage> {
                     service.setState((s) => s.popularTags()),
                 // ignore: missing_return
                 onIdle: () => Container(),
-                onWaiting: () => Expanded(
-                    flex: 1, child: Center(child: CircularProgressIndicator())),
-                onError: (error) => Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(color: Colors.blue),
-                ),
+                onWaiting: () =>
+                    Expanded(
+                        flex: 1,
+                        child: Center(child: CircularProgressIndicator())),
+                onError: (error) =>
+                    Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(color: Colors.blue),
+                    ),
                 onData: (tagService) {
                   return Expanded(
                     flex: 1,
@@ -66,7 +76,7 @@ class _TagsPageState extends State<TagsPage> {
                               runSpacing: 16,
                               children: tagService.tags
                                   .map((tag) =>
-                                      TagWidget('#' + tag.text, _onTagPress))
+                                  TagWidget('#' + tag.text, _onTagPress))
                                   .toList(),
 //                              ],
                             ),
