@@ -11,4 +11,8 @@ class TagService {
   void popularTags() async {
     tags = await _tagRepository.getPopularTags();
   }
+
+  void searchTags(String query) async {
+    tags = await _tagRepository.searchTag(query);
+  }
 }

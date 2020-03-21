@@ -6,4 +6,6 @@ abstract class ApiClient implements PostsClient {
   Future<List<PublicationResponse>> getPublications();
 
   Future<List<TagResponse>> getPopularTags();
+
+  Future<List<TagResponse>> searchTags(String query);
 }

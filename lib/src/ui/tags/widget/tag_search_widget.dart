@@ -2,11 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TagSearch extends StatefulWidget {
+  const TagSearch(
+    this._searchFun, {
+    Key key,
+  }) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => TagSearchState();
+  State<StatefulWidget> createState() => TagSearchState(_searchFun);
+  final ValueChanged<String> _searchFun;
 }
 
 class TagSearchState extends State<TagSearch> {
+  final ValueChanged<String> _searchFun;
+
+  TagSearchState(this._searchFun);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,6 +33,7 @@ class TagSearchState extends State<TagSearch> {
                   child: Icon(Icons.search)),
               Expanded(
                 child: TextField(
+                  onChanged: (string) => _searchFun(string),
                   decoration: InputDecoration(
                       contentPadding:
                           EdgeInsets.only(left: 8.0, right: 8.0, bottom: 4.0),
