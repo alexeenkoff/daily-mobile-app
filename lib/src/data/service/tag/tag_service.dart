@@ -13,6 +13,8 @@ class TagService {
   }
 
   void searchTags(String query) async {
-    tags = await _tagRepository.searchTag(query);
+    tags = query.isEmpty
+        ? await _tagRepository.getPopularTags()
+        : await _tagRepository.searchTag(query);
   }
 }
