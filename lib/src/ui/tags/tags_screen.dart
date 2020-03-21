@@ -44,19 +44,20 @@ class _TagsPageState extends State<TagsPage> {
                     service.setState((s) => s.popularTags()),
                 // ignore: missing_return
                 onIdle: () => Container(),
-                onWaiting: () => CircularProgressIndicator(),
+                onWaiting: () => Expanded(
+                    flex: 1, child: Center(child: CircularProgressIndicator())),
                 onError: (error) => Container(
                   width: 100,
                   height: 100,
                   decoration: BoxDecoration(color: Colors.blue),
                 ),
                 onData: (tagService) {
-                  return StateBuilder(
-                    models: [tagServiceRM],
-                    builder: (_, __) {
-                      return Expanded(
-                        flex: 1,
-                        child: SingleChildScrollView(
+                  return Expanded(
+                    flex: 1,
+                    child: StateBuilder(
+                      models: [tagServiceRM],
+                      builder: (_, __) {
+                        return SingleChildScrollView(
                           child: Padding(
                             padding: EdgeInsets.only(top: 24, bottom: 16),
                             child: Wrap(
@@ -70,9 +71,9 @@ class _TagsPageState extends State<TagsPage> {
 //                              ],
                             ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   );
                 },
               ),
