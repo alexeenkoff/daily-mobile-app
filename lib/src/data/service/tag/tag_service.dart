@@ -24,14 +24,15 @@ class TagService {
   }
 
   void onTagClick(String text, bool isChecked) async {
+    final tagText = text.replaceFirst('#', '');
     if (isChecked) {
-      var selectedTag = Tag(text.replaceFirst("#", ''), true);
+      var selectedTag = Tag(tagText, true);
       selectedTags.add(selectedTag);
       _tagStorageRepository.addSelectedTag(selectedTag);
     } else {
       Tag needDelete;
       selectedTags.forEach((tag) {
-        if (tag.text == text) {
+        if (tag.text == tagText) {
           needDelete = tag;
         }
       });
