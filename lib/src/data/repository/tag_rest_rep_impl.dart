@@ -2,10 +2,10 @@ import 'package:daily_mobile_app/src/api/api_client.dart';
 import 'package:daily_mobile_app/src/domain/entities/tag.dart';
 import 'package:daily_mobile_app/src/domain/interfaces/tag_repositoty.dart';
 
-class TagRepositoryImpl extends TagRepository {
+class TagRestRepositoryImpl extends TagRestRepository {
   final ApiClient _apiClient;
 
-  TagRepositoryImpl(this._apiClient);
+  TagRestRepositoryImpl(this._apiClient);
 
   @override
   Future<List<Tag>> getPopularTags() {

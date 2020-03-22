@@ -2,19 +2,38 @@ import 'package:daily_mobile_app/src/domain/entities/tag.dart';
 import 'package:daily_mobile_app/src/domain/interfaces/tag_repositoty.dart';
 
 class TagService {
-  final TagRepository _tagRepository;
+  final TagRestRepository _tagRestRepository;
+  final TagStorageRepository _tagStorageRepository;
 
-  TagService(this._tagRepository);
+  TagService(this._tagRestRepository, this._tagStorageRepository);
 
   List<Tag> tags;
+  List<Tag> selectedTags;
 
-  void popularTags() async {
-    tags = await _tagRepository.getPopularTags();
+  void initState() async {
+    tags = await _tagRestRepository.getPopularTags();
+    selectedTags = await _tagStorageRepository.getSelectedTags();
   }
 
   void searchTags(String query) async {
     tags = query.isEmpty
-        ? await _tagRepository.getPopularTags()
-        : await _tagRepository.searchTag(query);
+        ? await _tagRestRepository.getPopularTags()
+        : await _tagRestRepository.searchTag(query);
+  }
+
+  void onTagClick(String text, bool isChecked) async {
+    if (isChecked) {
+      selectedTags.add(Tag(text));
+    } else {
+      Tag needDelete;
+      selectedTags.forEach((tag) {
+        if (tag.text == text) {
+          needDelete = tag;
+        }
+      });
+      if (needDelete != null) {
+        selectedTags.remove(needDelete);
+      }
+    }
   }
 }
