@@ -21,7 +21,7 @@ class TagStorageRepositoryImpl implements TagStorageRepository {
     return _sharedPreferences.then((preferences) {
       return Future.value(preferences.getStringList(_key) ?? List());
     }).then((strings) {
-      return strings.map((string) => Tag(string)).toList();
+      return strings.map((string) => Tag(string, true)).toList();
     });
   }
 

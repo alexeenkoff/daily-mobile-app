@@ -16,4 +16,3 @@ void main() {
 class MockTagRepository extends Mock implements TagRestRepositoryImpl {}
 
 class MockStorageRepository extends Mock implements TagStorageRepository {}
-

@@ -72,8 +72,8 @@ class _TagsPageState extends State<TagsPage> {
                               spacing: 8,
                               runSpacing: 16,
                               children: tagService.tags
-                                  .map((tag) =>
-                                      TagWidget('#' + tag.text, _onTagPress))
+                                  .map((tag) => TagWidget('#' + tag.text,
+                                      tag.isChecked, _onTagPress))
                                   .toList(),
 //                              ],
                             ),

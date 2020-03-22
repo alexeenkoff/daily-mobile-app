@@ -11,7 +11,8 @@ class TagRestRepositoryImpl extends TagRestRepository {
   Future<List<Tag>> getPopularTags() {
     return Future(() {
       return _apiClient.getPopularTags().then((responses) {
-        var result = responses.map((response) => Tag(response.name)).toList();
+        var result =
+            responses.map((response) => Tag(response.name, false)).toList();
         return Future.value(result);
       });
     });
@@ -20,7 +21,7 @@ class TagRestRepositoryImpl extends TagRestRepository {
   @override
   Future<List<Tag>> searchTag(String query) {
     return _apiClient.searchTags(query).then((tags) {
-      return tags.map((tagResponse) => Tag(tagResponse.name)).toList();
+      return tags.map((tagResponse) => Tag(tagResponse.name, false)).toList();
     });
   }
 }
