@@ -8,19 +8,21 @@ class TagService {
   TagService(this._tagRestRepository, this._tagStorageRepository);
 
   List<Tag> tags;
-  List<Tag> selectedTags;
+  Set<Tag> selectedTags;
 
   void initState() async {
     final restTags = await _tagRestRepository.getPopularTags();
-    selectedTags = await _tagStorageRepository.getSelectedTags();
-    tags = await _mergeWithSelected(restTags, selectedTags);
+    selectedTags = await _tagStorageRepository.getSelectedTags().then((tags) {
+      return Future.value(tags.toSet());
+    });
+    tags = await _mergeWithSelected(restTags, selectedTags.toList());
   }
 
   void searchTags(String query) async {
     final restTags = query.isEmpty
         ? await _tagRestRepository.getPopularTags()
         : await _tagRestRepository.searchTag(query);
-    tags = await _mergeWithSelected(restTags, selectedTags);
+    tags = await _mergeWithSelected(restTags, selectedTags.toList());
   }
 
   void onTagClick(String text, bool isChecked) async {

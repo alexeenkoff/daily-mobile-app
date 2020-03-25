@@ -20,7 +20,7 @@ void main() {
       var fakeTags = [first, second];
       return Future.value(List.of(fakeTags));
     });
-    _tagService.selectedTags = [];
+    _tagService.selectedTags = {};
     await _tagService.searchTags('');
     expect(_tagService.tags.length, equals(2));
     expect(_tagService.tags[0], equals(first));
@@ -30,7 +30,7 @@ void main() {
 
   test('should remove tag from storage', () async {
     var tag = Tag('first', true);
-    _tagService.selectedTags = [tag];
+    _tagService.selectedTags = {tag};
     await _tagService.onTagClick('#first', false);
     verify(_storageRepository.removeSelectedTag(argThat(equals(tag))));
     expect(_tagService.selectedTags.length, equals(0));
@@ -38,10 +38,10 @@ void main() {
 
   test('should add tag to storage', () async {
     var tag = Tag('tag', true);
-    _tagService.selectedTags = [tag];
+    _tagService.selectedTags = {tag};
     await _tagService.onTagClick('#tag', true);
     verify(_storageRepository.addSelectedTag(argThat(equals(tag))));
-//    expect(_tagService.selectedTags.length, equals(1));
+    expect(_tagService.selectedTags.length, equals(1));
   });
 }
 
