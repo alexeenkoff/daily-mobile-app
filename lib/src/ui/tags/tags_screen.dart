@@ -1,4 +1,5 @@
 import 'package:daily_mobile_app/src/data/service/tag/tag_service.dart';
+import 'package:daily_mobile_app/src/ui/common/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
@@ -58,7 +59,7 @@ class _TagsPageState extends State<TagsPage> {
                 // ignore: missing_return
                 onIdle: () => Container(),
                 onWaiting: () => Expanded(
-                    flex: 1, child: Center(child: CircularProgressIndicator())),
+                    flex: 1, child: Center(child: DailyProgressIndicator())),
                 onError: (error) => Container(
                   width: 100,
                   height: 100,
