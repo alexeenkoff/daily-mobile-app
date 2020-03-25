@@ -22,7 +22,8 @@ class Application extends StatelessWidget {
               () => SharedPreferences.getInstance()),
 
           //Repositories
-          Inject<TagRestRepository>(() => TagRestRepositoryImpl(Injector.get())),
+          Inject<TagRestRepository>(
+              () => TagRestRepositoryImpl(Injector.get())),
           Inject<TagStorageRepository>(
               () => TagStorageRepositoryImpl(Injector.get())),
 
