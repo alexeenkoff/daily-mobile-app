@@ -1,6 +1,15 @@
 import 'package:daily_mobile_app/src/domain/entities/tag.dart';
 
-abstract class TagRepository {
+abstract class TagRestRepository {
   Future<List<Tag>> getPopularTags();
-  Future <List<Tag>> searchTag(String query);
+
+  Future<List<Tag>> searchTag(String query);
+}
+
+abstract class TagStorageRepository {
+  Future<void> addSelectedTag(Tag tag);
+
+  Future<void> removeSelectedTag(Tag tag);
+
+  Future<List<Tag>> getSelectedTags();
 }

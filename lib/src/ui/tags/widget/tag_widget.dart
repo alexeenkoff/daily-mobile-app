@@ -4,14 +4,16 @@ import 'dart:developer' as developer;
 
 class TagWidget extends StatefulWidget {
   final String text;
+  final bool _isChecked;
   final ValueChanged<TagPressedResult> onPressed;
 
-  TagWidget(this.text, ValueChanged<TagPressedResult> onPressed, {Key key})
+  TagWidget(this.text, this._isChecked, ValueChanged<TagPressedResult> onPressed,
+      {Key key})
       : this.onPressed = onPressed,
         super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _TagState();
+  State<StatefulWidget> createState() => _TagState(this._isChecked);
 }
 
 class TagPressedResult {
@@ -25,7 +27,9 @@ class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Animation<Color> _backgroundColorAnimation;
   Animation<Color> _textColorAnimation;
-  bool _selected = false;
+  bool _selected;
+
+  _TagState(this._selected);
 
   @override
   void initState() {
@@ -40,7 +44,9 @@ class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
       child: Container(
           decoration: BoxDecoration(
               shape: BoxShape.rectangle,
-              border: Border.all(color: Theme.of(context).accentColor),
+              border: Border.all(color: Theme
+                  .of(context)
+                  .accentColor),
               color: _backgroundAnimation(Theme.of(context)).value,
               borderRadius: BorderRadius.all(Radius.circular(4.0))),
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
@@ -65,14 +71,14 @@ class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
   Animation<Color> _backgroundAnimation(ThemeData themeData) {
     if (_backgroundColorAnimation == null) {
       _backgroundColorAnimation = ColorTween(
-              begin:
-                  _selected ? themeData.accentColor : themeData.backgroundColor,
-              end:
-                  _selected ? themeData.backgroundColor : themeData.accentColor)
+          begin:
+          _selected ? themeData.accentColor : themeData.backgroundColor,
+          end:
+          _selected ? themeData.backgroundColor : themeData.accentColor)
           .animate(_controller)
-            ..addListener(() {
-              setState(() {});
-            });
+        ..addListener(() {
+          setState(() {});
+        });
     }
     return _backgroundColorAnimation;
   }
@@ -80,12 +86,12 @@ class _TagState extends State<TagWidget> with SingleTickerProviderStateMixin {
   Animation<Color> _textAnimation(ThemeData themeData) {
     if (_textColorAnimation == null) {
       _textColorAnimation = ColorTween(
-              begin: _selected ? themeData.primaryColor : themeData.accentColor,
-              end: _selected ? themeData.accentColor : themeData.primaryColor)
+          begin: _selected ? themeData.primaryColor : themeData.accentColor,
+          end: _selected ? themeData.accentColor : themeData.primaryColor)
           .animate(_controller)
-            ..addListener(() {
-              setState(() {});
-            });
+        ..addListener(() {
+          setState(() {});
+        });
     }
     return _textColorAnimation;
   }

@@ -2,19 +2,64 @@ import 'package:daily_mobile_app/src/domain/entities/tag.dart';
 import 'package:daily_mobile_app/src/domain/interfaces/tag_repositoty.dart';
 
 class TagService {
-  final TagRepository _tagRepository;
+  final TagRestRepository _tagRestRepository;
+  final TagStorageRepository _tagStorageRepository;
 
-  TagService(this._tagRepository);
+  TagService(this._tagRestRepository, this._tagStorageRepository);
 
   List<Tag> tags;
+  List<Tag> selectedTags;
 
-  void popularTags() async {
-    tags = await _tagRepository.getPopularTags();
+  void initState() async {
+    final restTags = await _tagRestRepository.getPopularTags();
+    selectedTags = await _tagStorageRepository.getSelectedTags();
+    tags = await _mergeWithSelected(restTags, selectedTags);
   }
 
   void searchTags(String query) async {
-    tags = query.isEmpty
-        ? await _tagRepository.getPopularTags()
-        : await _tagRepository.searchTag(query);
+    final restTags = query.isEmpty
+        ? await _tagRestRepository.getPopularTags()
+        : await _tagRestRepository.searchTag(query);
+    tags = await _mergeWithSelected(restTags, selectedTags);
+  }
+
+  void onTagClick(String text, bool isChecked) async {
+    return Future<void>(() {
+      final tagText = text.replaceFirst('#', '');
+      if (isChecked) {
+        var selectedTag = Tag(tagText, true);
+        selectedTags.add(selectedTag);
+        return _tagStorageRepository.addSelectedTag(selectedTag);
+      } else {
+        Tag needDelete;
+        selectedTags.forEach((tag) {
+          if (tag.text == tagText) {
+            needDelete = tag;
+          }
+        });
+        if (needDelete != null) {
+          selectedTags.remove(needDelete);
+        }
+        return needDelete != null
+            ? _tagStorageRepository.removeSelectedTag(needDelete)
+            : Future.value();
+      }
+    });
+  }
+
+  Future<List<Tag>> _mergeWithSelected(
+      List<Tag> tags, List<Tag> selectedTags) async {
+    return Future<List<Tag>>(() {
+      List<Tag> result = List();
+      tags.forEach((tag) {
+        final index =
+            selectedTags.indexWhere((searchTag) => searchTag.text == tag.text);
+        if (index != -1) {
+          result.add(Tag(tag.text, true));
+        } else
+          result.add(tag);
+      });
+      return Future.value(result);
+    });
   }
 }
