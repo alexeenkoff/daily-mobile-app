@@ -9,5 +9,7 @@ abstract class TagRestRepository {
 abstract class TagStorageRepository {
   Future<void> addSelectedTag(Tag tag);
 
+  Future<void> removeSelectedTag(Tag tag);
+
   Future<List<Tag>> getSelectedTags();
 }

@@ -31,4 +31,12 @@ class TagStorageRepositoryImpl implements TagStorageRepository {
       preferences.setStringList(_key, strings);
     });
   }
+
+  @override
+  Future<void> removeSelectedTag(Tag tag) {
+    return getSelectedTags().then((selected) {
+      selected.removeWhere((selectedTag) => selectedTag.text == tag.text);
+      return Future.value(selected);
+    }).then(_saveSelectedTags);
+  }
 }

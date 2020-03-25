@@ -24,22 +24,27 @@ class TagService {
   }
 
   void onTagClick(String text, bool isChecked) async {
-    final tagText = text.replaceFirst('#', '');
-    if (isChecked) {
-      var selectedTag = Tag(tagText, true);
-      selectedTags.add(selectedTag);
-      _tagStorageRepository.addSelectedTag(selectedTag);
-    } else {
-      Tag needDelete;
-      selectedTags.forEach((tag) {
-        if (tag.text == tagText) {
-          needDelete = tag;
+    return Future<void>(() {
+      final tagText = text.replaceFirst('#', '');
+      if (isChecked) {
+        var selectedTag = Tag(tagText, true);
+        selectedTags.add(selectedTag);
+        return _tagStorageRepository.addSelectedTag(selectedTag);
+      } else {
+        Tag needDelete;
+        selectedTags.forEach((tag) {
+          if (tag.text == tagText) {
+            needDelete = tag;
+          }
+        });
+        if (needDelete != null) {
+          selectedTags.remove(needDelete);
         }
-      });
-      if (needDelete != null) {
-        selectedTags.remove(needDelete);
+        return needDelete != null
+            ? _tagStorageRepository.removeSelectedTag(needDelete)
+            : Future.value();
       }
-    }
+    });
   }
 
   Future<List<Tag>> _mergeWithSelected(

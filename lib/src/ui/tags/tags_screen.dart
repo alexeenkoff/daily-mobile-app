@@ -19,11 +19,6 @@ class _TagsPageState extends State<TagsPage> {
   final tagServiceRM = Injector.getAsReactive<TagService>();
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
@@ -36,7 +31,18 @@ class _TagsPageState extends State<TagsPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Expanded(flex: 1, child: TagCounter(key: _tagCounterKey)),
+                  Expanded(
+                      flex: 1,
+                      child: StateBuilder<TagService>(
+                        models: [tagServiceRM],
+                        onRebuildState: (_, tagServiceVM) {
+                          _tagCounterKey.currentState.updateCount(
+                              tagServiceVM.value.selectedTags.length);
+                        },
+                        builder: (_, tagServiceVM) {
+                          return TagCounter(key: _tagCounterKey);
+                        },
+                      )),
                   Container(margin: EdgeInsets.only(left: 8, right: 8)),
                   Expanded(
                       flex: 4,
@@ -93,10 +99,10 @@ class _TagsPageState extends State<TagsPage> {
 
   _onTagPress(TagPressedResult result) {
     setState(() {
-      tagServiceRM
-          .setState((state) => state.onTagClick(result.text, result.checked));
-      _tagCounterKey.currentState
-          .updateCount(tagServiceRM.value.selectedTags.length);
+      tagServiceRM.setState((state) {
+        state.onTagClick(result.text, result.checked);
+        return;
+      });
     });
   }
 }
