@@ -18,6 +18,7 @@ class TagSearchState extends State<TagSearch> {
   final ValueChanged<String> _searchFun;
   final _searchController = TextEditingController();
   Timer _debounce;
+  String _searchText = '';
 
   TagSearchState(this._searchFun);
 
@@ -28,10 +29,13 @@ class TagSearchState extends State<TagSearch> {
   }
 
   _searchListener() {
-    if (_debounce?.isActive ?? false) _debounce.cancel();
-    _debounce = Timer(const Duration(milliseconds: 1000), () {
-      _searchFun(_searchController.text);
-    });
+    if (_searchController.value.text != _searchText) {
+      _searchText = _searchController.text;
+      if (_debounce?.isActive ?? false) _debounce.cancel();
+      _debounce = Timer(const Duration(milliseconds: 1000), () {
+        _searchFun(_searchText);
+      });
+    }
   }
 
   @override
