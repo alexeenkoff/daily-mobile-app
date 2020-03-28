@@ -4,6 +4,7 @@ class TagBottomControl extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(bottom: 22, top: 22),
       decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -16,40 +17,36 @@ class TagBottomControl extends StatelessWidget {
             Color.fromARGB(250, 28, 30, 33),
             Theme.of(context).backgroundColor
           ])),
-      child: Container(
-        height: 36,
-        margin: EdgeInsets.only(bottom: 22, top: 22),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Material(
-              color: Colors.transparent,
-              child: InkWell(
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                  child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                      child: Text('skip')),
-                  onTap: () {
-                    print("Skip clicked");
-                  }),
-            ),
-            Material(
-              borderRadius: BorderRadius.all(Radius.circular(4.0)),
-              color: Theme.of(context).primaryColor,
-              child: InkWell(
-                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Material(
+            color: Colors.transparent,
+            child: InkWell(
+                borderRadius: BorderRadius.all(Radius.circular(4)),
                 child: Container(
                     padding:
-                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-                    child: Text('I`M ALL SET')),
+                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    child: Text('skip')),
                 onTap: () {
-                  print("All set clicked");
-                },
-              ),
-            )
-          ],
-        ),
+                  print("Skip clicked");
+                }),
+          ),
+          Material(
+            borderRadius: BorderRadius.all(Radius.circular(4.0)),
+            color: Theme.of(context).primaryColor,
+            child: InkWell(
+              borderRadius: BorderRadius.all(Radius.circular(4.0)),
+              child: Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                  child: Text('I`M ALL SET')),
+              onTap: () {
+                print("All set clicked");
+              },
+            ),
+          )
+        ],
       ),
     );
   }
