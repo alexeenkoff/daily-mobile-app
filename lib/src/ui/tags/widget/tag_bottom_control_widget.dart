@@ -22,29 +22,31 @@ class TagBottomControl extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            InkWell(
-                borderRadius: BorderRadius.all(Radius.circular(4)),
-                child: Ink(
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                  borderRadius: BorderRadius.all(Radius.circular(4)),
+                  child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                      child: Text('skip')),
+                  onTap: () {
+                    print("Skip clicked");
+                  }),
+            ),
+            Material(
+              borderRadius: BorderRadius.all(Radius.circular(4.0)),
+              color: Theme.of(context).primaryColor,
+              child: InkWell(
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                child: Container(
                     padding:
-                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                    child: Text('skip')),
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                    child: Text('I`M ALL SET')),
                 onTap: () {
-                  print("Skip clicked");
-                }),
-            InkWell(
-              borderRadius: BorderRadius.all(Radius.circular(4)),
-              child: Ink(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                    shape: BoxShape.rectangle,
-                  ),
-                  child: Text('I`M ALL SET')),
-              onTap: () {
-                print("All set clicked");
-              },
+                  print("All set clicked");
+                },
+              ),
             )
           ],
         ),
