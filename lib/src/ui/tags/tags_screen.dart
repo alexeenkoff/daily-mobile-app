@@ -1,6 +1,7 @@
 import 'package:daily_mobile_app/src/data/service/tag/tag_service.dart';
 import 'package:daily_mobile_app/src/ui/common/progress_indicator.dart';
 import 'package:daily_mobile_app/src/ui/tags/widget/tag_bottom_control_widget.dart';
+import 'package:daily_mobile_app/src/ui/tags/widget/tag_explanation_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
@@ -30,27 +31,31 @@ class _TagsPageState extends State<TagsPage> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(
-                      flex: 1,
-                      child: StateBuilder<TagService>(
-                        models: [tagServiceRM],
-                        onRebuildState: (_, tagServiceVM) {
-                          _tagCounterKey.currentState.updateCount(
-                              tagServiceVM.value.selectedTags.length);
-                        },
-                        builder: (_, tagServiceVM) {
-                          return TagCounter(key: _tagCounterKey);
-                        },
-                      )),
-                  Container(margin: EdgeInsets.only(left: 8, right: 8)),
-                  Expanded(
-                      flex: 4,
-                      child: TagSearch((query) => tagServiceRM
-                          .setState((state) => state.searchTags(query))))
-                ],
+              TagExplanation(),
+              Container(
+                margin: EdgeInsets.only(top: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                        flex: 1,
+                        child: StateBuilder<TagService>(
+                          models: [tagServiceRM],
+                          onRebuildState: (_, tagServiceVM) {
+                            _tagCounterKey.currentState.updateCount(
+                                tagServiceVM.value.selectedTags.length);
+                          },
+                          builder: (_, tagServiceVM) {
+                            return TagCounter(key: _tagCounterKey);
+                          },
+                        )),
+                    Container(margin: EdgeInsets.only(left: 8, right: 8)),
+                    Expanded(
+                        flex: 4,
+                        child: TagSearch((query) => tagServiceRM
+                            .setState((state) => state.searchTags(query))))
+                  ],
+                ),
               ),
               Expanded(
                 flex: 1,
