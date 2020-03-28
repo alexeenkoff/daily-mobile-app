@@ -1,5 +1,6 @@
 import 'package:daily_mobile_app/src/data/service/tag/tag_service.dart';
 import 'package:daily_mobile_app/src/ui/common/progress_indicator.dart';
+import 'package:daily_mobile_app/src/ui/tags/widget/tag_bottom_control_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
@@ -51,29 +52,27 @@ class _TagsPageState extends State<TagsPage> {
                           .setState((state) => state.searchTags(query))))
                 ],
               ),
-              WhenRebuilder<TagService>(
-                // ignore: missing_return
-                models: [tagServiceRM],
-                initState: (_, service) =>
-                    service.setState((s) => s.initState()),
-                // ignore: missing_return
-                onIdle: () => Container(),
-                onWaiting: () => Expanded(
-                    flex: 1, child: Center(child: DailyProgressIndicator())),
-                onError: (error) => Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(color: Colors.blue),
-                ),
-                onData: (tagService) {
-                  return Expanded(
-                    flex: 1,
-                    child: StateBuilder(
+              Expanded(
+                flex: 1,
+                child: Stack(
+                  children: <Widget>[
+                    WhenRebuilder<TagService>(
+                      // ignore: missing_return
                       models: [tagServiceRM],
-                      builder: (_, __) {
+                      initState: (_, service) =>
+                          service.setState((s) => s.initState()),
+                      // ignore: missing_return
+                      onIdle: () => Container(),
+                      onWaiting: () => Center(child: DailyProgressIndicator()),
+                      onError: (error) => Container(
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(color: Colors.blue),
+                      ),
+                      onData: (tagService) {
                         return SingleChildScrollView(
                           child: Padding(
-                            padding: EdgeInsets.only(top: 24, bottom: 16),
+                            padding: EdgeInsets.only(top: 24, bottom: 82),
                             child: Wrap(
                               alignment: WrapAlignment.center,
                               spacing: 8,
@@ -88,8 +87,11 @@ class _TagsPageState extends State<TagsPage> {
                         );
                       },
                     ),
-                  );
-                },
+                    Align(
+                        alignment: Alignment.bottomCenter,
+                        child: TagBottomControl())
+                  ],
+                ),
               ),
             ],
           ),
