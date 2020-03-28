@@ -70,25 +70,20 @@ class _TagsPageState extends State<TagsPage> {
                         decoration: BoxDecoration(color: Colors.blue),
                       ),
                       onData: (tagService) {
-                        return StateBuilder(
-                          models: [tagServiceRM],
-                          builder: (_, __) {
-                            return SingleChildScrollView(
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 24, bottom: 82),
-                                child: Wrap(
-                                  alignment: WrapAlignment.center,
-                                  spacing: 8,
-                                  runSpacing: 16,
-                                  children: tagService.tags
-                                      .map((tag) => TagWidget('#' + tag.text,
-                                          tag.isChecked, _onTagPress))
-                                      .toList(),
+                        return SingleChildScrollView(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 24, bottom: 82),
+                            child: Wrap(
+                              alignment: WrapAlignment.center,
+                              spacing: 8,
+                              runSpacing: 16,
+                              children: tagService.tags
+                                  .map((tag) => TagWidget('#' + tag.text,
+                                      tag.isChecked, _onTagPress))
+                                  .toList(),
 //                              ],
-                                ),
-                              ),
-                            );
-                          },
+                            ),
+                          ),
                         );
                       },
                     ),
