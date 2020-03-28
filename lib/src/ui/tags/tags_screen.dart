@@ -105,10 +105,9 @@ class _TagsPageState extends State<TagsPage> {
     if (tagService.needShowExplanation) {
       widgets.add(TagExplanationText());
     }
-    var tagList = tagService.tags
+    widgets.addAll(tagService.tags
         .map((tag) => TagWidget('#' + tag.text, tag.isChecked, _onTagPress))
-        .toList();
-    widgets.addAll(tagList);
+        .toList());
     return widgets;
   }
 

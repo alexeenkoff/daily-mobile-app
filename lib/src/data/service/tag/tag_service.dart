@@ -25,7 +25,7 @@ class TagService {
       restTags = await _tagRestRepository.getPopularTags();
       needShowExplanation = true;
     } else {
-     restTags = await _tagRestRepository.searchTag(query);
+      restTags = await _tagRestRepository.searchTag(query);
       needShowExplanation = false;
     }
     tags = await _mergeWithSelected(restTags, selectedTags.toList());
