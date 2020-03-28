@@ -76,7 +76,7 @@ class _TagsPageState extends State<TagsPage> {
                           builder: (_, __) {
                             return SingleChildScrollView(
                               child: Padding(
-                                padding: EdgeInsets.only(top: 24, bottom: 16),
+                                padding: EdgeInsets.only(top: 24, bottom: 82),
                                 child: Wrap(
                                   alignment: WrapAlignment.center,
                                   spacing: 8,
@@ -92,7 +92,7 @@ class _TagsPageState extends State<TagsPage> {
                           },
                         ),
                         Align(
-                          alignment: Alignment.bottomCenter,
+                            alignment: Alignment.bottomCenter,
                             child: TagBottomControl())
                       ],
                     ),
