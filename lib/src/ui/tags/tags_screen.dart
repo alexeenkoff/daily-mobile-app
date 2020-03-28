@@ -69,30 +69,36 @@ class _TagsPageState extends State<TagsPage> {
                 onData: (tagService) {
                   return Expanded(
                     flex: 1,
-                    child: StateBuilder(
-                      models: [tagServiceRM],
-                      builder: (_, __) {
-                        return SingleChildScrollView(
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 24, bottom: 16),
-                            child: Wrap(
-                              alignment: WrapAlignment.center,
-                              spacing: 8,
-                              runSpacing: 16,
-                              children: tagService.tags
-                                  .map((tag) => TagWidget('#' + tag.text,
-                                      tag.isChecked, _onTagPress))
-                                  .toList(),
+                    child: Stack(
+                      children: <Widget>[
+                        StateBuilder(
+                          models: [tagServiceRM],
+                          builder: (_, __) {
+                            return SingleChildScrollView(
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 24, bottom: 16),
+                                child: Wrap(
+                                  alignment: WrapAlignment.center,
+                                  spacing: 8,
+                                  runSpacing: 16,
+                                  children: tagService.tags
+                                      .map((tag) => TagWidget('#' + tag.text,
+                                          tag.isChecked, _onTagPress))
+                                      .toList(),
 //                              ],
-                            ),
-                          ),
-                        );
-                      },
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                            child: TagBottomControl())
+                      ],
                     ),
                   );
                 },
               ),
-              TagBottomControl()
             ],
           ),
         ),
