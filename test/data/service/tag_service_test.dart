@@ -43,6 +43,20 @@ void main() {
     verify(_storageRepository.addSelectedTag(argThat(equals(tag))));
     expect(_tagService.selectedTags.length, equals(1));
   });
+
+  test('should show explanation works fine', () async {
+    when(_restRepository.getPopularTags()).thenAnswer((_) {
+      return Future.value([]);
+    });
+    when(_restRepository.searchTag(any)).thenAnswer((_) {
+      return Future.value([]);
+    });
+    _tagService.selectedTags = {};
+    await _tagService.searchTags('');
+    expect(_tagService.needShowExplanation, equals(true));
+    await _tagService.searchTags('some_query');
+    expect(_tagService.needShowExplanation, equals(false));
+  });
 }
 
 class MockTagRepository extends Mock implements TagRestRepositoryImpl {}

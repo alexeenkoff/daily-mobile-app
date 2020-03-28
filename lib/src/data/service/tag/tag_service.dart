@@ -9,6 +9,7 @@ class TagService {
 
   List<Tag> tags;
   Set<Tag> selectedTags;
+  bool needShowExplanation = true;
 
   void initState() async {
     final restTags = await _tagRestRepository.getPopularTags();
@@ -19,9 +20,14 @@ class TagService {
   }
 
   void searchTags(String query) async {
-    final restTags = query.isEmpty
-        ? await _tagRestRepository.getPopularTags()
-        : await _tagRestRepository.searchTag(query);
+    List<Tag> restTags;
+    if (query.isEmpty) {
+      restTags = await _tagRestRepository.getPopularTags();
+      needShowExplanation = true;
+    } else {
+      restTags = await _tagRestRepository.searchTag(query);
+      needShowExplanation = false;
+    }
     tags = await _mergeWithSelected(restTags, selectedTags.toList());
   }
 
