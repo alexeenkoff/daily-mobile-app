@@ -1,5 +1,6 @@
 import 'package:daily_mobile_app/src/data/service/tag/tag_service.dart';
 import 'package:daily_mobile_app/src/ui/common/progress_indicator.dart';
+import 'package:daily_mobile_app/src/ui/tags/widget/tag_bottom_control_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
@@ -91,6 +92,7 @@ class _TagsPageState extends State<TagsPage> {
                   );
                 },
               ),
+              TagBottomControl()
             ],
           ),
         ),
