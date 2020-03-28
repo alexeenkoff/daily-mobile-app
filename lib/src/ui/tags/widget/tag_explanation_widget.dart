@@ -7,7 +7,7 @@ class TagExplanationTitle extends StatelessWidget {
     return Center(
       child: Text(
         'TELL US WHAT YOU`RE INTO',
-        style: TextStyle(color: Theme.of(context).accentColor, fontSize: 20),
+        style: TextStyle(color: Theme.of(context).accentColor, fontStyle: FontStyle.italic, fontSize: 20),
       ),
     );
   }

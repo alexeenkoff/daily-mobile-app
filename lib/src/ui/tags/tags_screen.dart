@@ -33,27 +33,30 @@ class _TagsPageState extends State<TagsPage> {
             TagExplanationTitle(),
             Container(
               margin: EdgeInsets.only(top: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Expanded(
-                      flex: 1,
-                      child: StateBuilder<TagService>(
-                        models: [tagServiceRM],
-                        onRebuildState: (_, tagServiceVM) {
-                          _tagCounterKey.currentState.updateCount(
-                              tagServiceVM.value.selectedTags.length);
-                        },
-                        builder: (_, tagServiceVM) {
-                          return TagCounter(key: _tagCounterKey);
-                        },
-                      )),
-                  Container(margin: EdgeInsets.only(left: 8, right: 8)),
-                  Expanded(
-                      flex: 4,
-                      child: TagSearch((query) => tagServiceRM
-                          .setState((state) => state.searchTags(query))))
-                ],
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                        flex: 1,
+                        child: StateBuilder<TagService>(
+                          models: [tagServiceRM],
+                          onRebuildState: (_, tagServiceVM) {
+                            _tagCounterKey.currentState.updateCount(
+                                tagServiceVM.value.selectedTags.length);
+                          },
+                          builder: (_, tagServiceVM) {
+                            return TagCounter(key: _tagCounterKey);
+                          },
+                        )),
+                    Container(margin: EdgeInsets.only(left: 8, right: 8)),
+                    Expanded(
+                        flex: 4,
+                        child: TagSearch((query) => tagServiceRM
+                            .setState((state) => state.searchTags(query))))
+                  ],
+                ),
               ),
             ),
             Expanded(
@@ -76,7 +79,7 @@ class _TagsPageState extends State<TagsPage> {
                     onData: (tagService) {
                       return SingleChildScrollView(
                         child: Padding(
-                          padding: EdgeInsets.only(top: 16, bottom: 82),
+                          padding: EdgeInsets.only(top: 8, bottom: 82),
                           child: Wrap(
                             alignment: WrapAlignment.center,
                             spacing: 8,
