@@ -52,26 +52,25 @@ class _TagsPageState extends State<TagsPage> {
                           .setState((state) => state.searchTags(query))))
                 ],
               ),
-              WhenRebuilder<TagService>(
-                // ignore: missing_return
-                models: [tagServiceRM],
-                initState: (_, service) =>
-                    service.setState((s) => s.initState()),
-                // ignore: missing_return
-                onIdle: () => Container(),
-                onWaiting: () => Expanded(
-                    flex: 1, child: Center(child: DailyProgressIndicator())),
-                onError: (error) => Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(color: Colors.blue),
-                ),
-                onData: (tagService) {
-                  return Expanded(
-                    flex: 1,
-                    child: Stack(
-                      children: <Widget>[
-                        StateBuilder(
+              Expanded(
+                flex: 1,
+                child: Stack(
+                  children: <Widget>[
+                    WhenRebuilder<TagService>(
+                      // ignore: missing_return
+                      models: [tagServiceRM],
+                      initState: (_, service) =>
+                          service.setState((s) => s.initState()),
+                      // ignore: missing_return
+                      onIdle: () => Container(),
+                      onWaiting: () => Center(child: DailyProgressIndicator()),
+                      onError: (error) => Container(
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(color: Colors.blue),
+                      ),
+                      onData: (tagService) {
+                        return StateBuilder(
                           models: [tagServiceRM],
                           builder: (_, __) {
                             return SingleChildScrollView(
@@ -90,14 +89,14 @@ class _TagsPageState extends State<TagsPage> {
                               ),
                             );
                           },
-                        ),
-                        Align(
-                            alignment: Alignment.bottomCenter,
-                            child: TagBottomControl())
-                      ],
+                        );
+                      },
                     ),
-                  );
-                },
+                    Align(
+                        alignment: Alignment.bottomCenter,
+                        child: TagBottomControl())
+                  ],
+                ),
               ),
             ],
           ),
