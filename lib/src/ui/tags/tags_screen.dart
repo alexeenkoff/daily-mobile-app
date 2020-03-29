@@ -79,7 +79,6 @@ class _TagsPageState extends State<TagsPage> {
                             spacing: 8,
                             runSpacing: 16,
                             children: _content(tagService),
-//                              ],
                           ),
                         ),
                       );
@@ -98,12 +97,13 @@ class _TagsPageState extends State<TagsPage> {
   }
 
   List<Widget> _content(TagService tagService) {
-    Widget explanation =
-        tagService.needShowExplanation ? TagExplanationText() : null;
     List<Widget> tags = tagService.tags
         .map((tag) => TagWidget('#' + tag.text, tag.isChecked, _onTagPress))
         .toList();
-    return explanation != null ? [explanation, ...tags] : tags;
+    return [
+      if (tagService.needShowExplanation) TagExplanationText(),
+      ...tags,
+    ];
   }
 
   _onTagPress(TagPressedResult result) {
