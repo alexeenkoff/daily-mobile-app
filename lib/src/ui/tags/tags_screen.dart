@@ -18,7 +18,7 @@ class TagsPage extends StatefulWidget {
 }
 
 class _TagsPageState extends State<TagsPage> {
-  final tagServiceRM = Injector.getAsReactive<TagService>();
+  final ReactiveModel<TagService> tagServiceRM = Injector.getAsReactive<TagService>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,18 +37,28 @@ class _TagsPageState extends State<TagsPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Expanded(
-                      flex: 1,
-                      child: TagCounter(
-                        key: Key('tagCounter'),
-                        count: tagServiceRM.value.selectedTags.length,
-                      ),
+                    StateBuilder(
+                      models: [tagServiceRM],
+                      builder: (context, _) {
+                        int selectedCount = tagServiceRM.state.selectedTags?.length ?? 0;
+                        return Expanded(
+                          flex: 1,
+                          child: TagCounter(
+                            key: Key('tagCounter $selectedCount'),
+                            count: selectedCount,
+                          ),
+                        );
+                      },
                     ),
                     Container(margin: EdgeInsets.only(left: 8, right: 8)),
                     Expanded(
-                        flex: 4,
-                        child: TagSearch((query) => tagServiceRM
-                            .setState((state) => state.loadTags(query))))
+                      flex: 4,
+                      child: TagSearch(
+                        (query) => tagServiceRM.setState(
+                          (state) => state.loadTags(query)
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -107,11 +117,6 @@ class _TagsPageState extends State<TagsPage> {
   }
 
   _onTagPress(TagPressedResult result) {
-    setState(() {
-      tagServiceRM.setState((state) {
-        state.onTagClick(result.text, result.checked);
-        return;
-      });
-    });
+    tagServiceRM.setState((state) => state.onTagClick(result.text, result.checked));
   }
 }
