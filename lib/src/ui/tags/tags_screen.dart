@@ -18,7 +18,6 @@ class TagsPage extends StatefulWidget {
 }
 
 class _TagsPageState extends State<TagsPage> {
-  GlobalKey<TagCounterState> _tagCounterKey = GlobalKey();
   final tagServiceRM = Injector.getAsReactive<TagService>();
 
   @override
@@ -39,17 +38,12 @@ class _TagsPageState extends State<TagsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Expanded(
-                        flex: 1,
-                        child: StateBuilder<TagService>(
-                          models: [tagServiceRM],
-                          onRebuildState: (_, tagServiceVM) {
-                            _tagCounterKey.currentState.updateCount(
-                                tagServiceVM.value.selectedTags.length);
-                          },
-                          builder: (_, tagServiceVM) {
-                            return TagCounter(key: _tagCounterKey);
-                          },
-                        )),
+                      flex: 1,
+                      child: TagCounter(
+                        key: Key('tagCounter'),
+                        count: tagServiceRM.value.selectedTags.length,
+                      ),
+                    ),
                     Container(margin: EdgeInsets.only(left: 8, right: 8)),
                     Expanded(
                         flex: 4,
