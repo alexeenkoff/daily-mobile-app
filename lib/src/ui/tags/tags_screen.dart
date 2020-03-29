@@ -54,7 +54,7 @@ class _TagsPageState extends State<TagsPage> {
                     Expanded(
                         flex: 4,
                         child: TagSearch((query) => tagServiceRM
-                            .setState((state) => state.searchTags(query))))
+                            .setState((state) => state.loadTags(query))))
                   ],
                 ),
               ),
@@ -104,14 +104,12 @@ class _TagsPageState extends State<TagsPage> {
   }
 
   List<Widget> _content(TagService tagService) {
-    List<Widget> widgets = List<Widget>();
-    if (tagService.needShowExplanation) {
-      widgets.add(TagExplanationText());
-    }
-    widgets.addAll(tagService.tags
+    Widget explanation =
+        tagService.needShowExplanation ? TagExplanationText() : null;
+    List<Widget> tags = tagService.tags
         .map((tag) => TagWidget('#' + tag.text, tag.isChecked, _onTagPress))
-        .toList());
-    return widgets;
+        .toList();
+    return explanation != null ? [explanation, ...tags] : tags;
   }
 
   _onTagPress(TagPressedResult result) {

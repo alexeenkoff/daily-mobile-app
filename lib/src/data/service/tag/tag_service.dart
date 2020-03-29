@@ -19,13 +19,13 @@ class TagService {
     tags = await _mergeWithSelected(restTags, selectedTags.toList());
   }
 
-  void searchTags(String query) async {
+  void loadTags([String searchQuery]) async {
     List<Tag> restTags;
-    if (query.isEmpty) {
+    if (searchQuery == null || searchQuery.isEmpty) {
       restTags = await _tagRestRepository.getPopularTags();
       needShowExplanation = true;
     } else {
-      restTags = await _tagRestRepository.searchTag(query);
+      restTags = await _tagRestRepository.searchTag(searchQuery);
       needShowExplanation = false;
     }
     tags = await _mergeWithSelected(restTags, selectedTags.toList());
@@ -60,14 +60,17 @@ class TagService {
     return Future<List<Tag>>(() {
       List<Tag> result = List();
       tags.forEach((tag) {
-        final index =
-            selectedTags.indexWhere((searchTag) => searchTag.text == tag.text);
-        if (index != -1) {
-          result.add(Tag(tag.text, true));
-        } else
-          result.add(tag);
+        final tagInSelected = selectedTags.find(tag);
+        result.add(tagInSelected != null ? Tag(tagInSelected.text, true) : tag);
       });
       return Future.value(result);
     });
+  }
+}
+
+extension _Tags on List<Tag> {
+  Tag find(Tag tag) {
+    final index = this.indexWhere((searchTag) => searchTag.text == tag.text);
+    return index != -1 ? this[index] : null;
   }
 }
