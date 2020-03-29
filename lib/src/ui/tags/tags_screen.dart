@@ -54,7 +54,7 @@ class _TagsPageState extends State<TagsPage> {
                     Expanded(
                         flex: 4,
                         child: TagSearch((query) => tagServiceRM
-                            .setState((state) => state.searchTags(query))))
+                            .setState((state) => state.loadTags(query))))
                   ],
                 ),
               ),

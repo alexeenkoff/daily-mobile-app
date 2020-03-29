@@ -21,7 +21,7 @@ void main() {
       return Future.value(List.of(fakeTags));
     });
     _tagService.selectedTags = {};
-    await _tagService.searchTags('');
+    await _tagService.loadTags('');
     expect(_tagService.tags.length, equals(2));
     expect(_tagService.tags[0], equals(first));
     expect(_tagService.tags[1], equals(second));
@@ -52,9 +52,9 @@ void main() {
       return Future.value([]);
     });
     _tagService.selectedTags = {};
-    await _tagService.searchTags('');
+    await _tagService.loadTags('');
     expect(_tagService.needShowExplanation, equals(true));
-    await _tagService.searchTags('some_query');
+    await _tagService.loadTags('some_query');
     expect(_tagService.needShowExplanation, equals(false));
   });
 }

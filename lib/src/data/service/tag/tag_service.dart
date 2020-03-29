@@ -19,13 +19,13 @@ class TagService {
     tags = await _mergeWithSelected(restTags, selectedTags.toList());
   }
 
-  void searchTags(String query) async {
+  void loadTags([String searchQuery]) async {
     List<Tag> restTags;
-    if (query.isEmpty) {
+    if (searchQuery == null || searchQuery.isEmpty) {
       restTags = await _tagRestRepository.getPopularTags();
       needShowExplanation = true;
     } else {
-      restTags = await _tagRestRepository.searchTag(query);
+      restTags = await _tagRestRepository.searchTag(searchQuery);
       needShowExplanation = false;
     }
     tags = await _mergeWithSelected(restTags, selectedTags.toList());
