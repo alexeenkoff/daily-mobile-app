@@ -4,6 +4,7 @@ import 'package:daily_mobile_app/src/data/repository/tag_rest_rep_impl.dart';
 import 'package:daily_mobile_app/src/data/repository/tag_storage_rep_impl.dart';
 import 'package:daily_mobile_app/src/data/service/tag/tag_service.dart';
 import 'package:daily_mobile_app/src/domain/interfaces/tag_repositoty.dart';
+import 'package:daily_mobile_app/src/ui/splash/splash_screen.dart';
 import 'package:daily_mobile_app/src/ui/tags/tags_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,11 +34,15 @@ class Application extends StatelessWidget {
         builder: (_) => MaterialApp(
               title: 'Daily',
               theme: appTheme(),
-              routes: {Routes.tags: (context) => TagsPage()},
+              routes: {
+                Routes.splash: (context) => SplashPage(),
+                Routes.tags: (context) => TagsPage()
+              },
             ));
   }
 }
 
 class Routes {
-  static final tags = '/';
+  static final tags = '/tags';
+  static final splash = '/';
 }

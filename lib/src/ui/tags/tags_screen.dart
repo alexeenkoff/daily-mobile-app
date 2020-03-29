@@ -64,11 +64,9 @@ class _TagsPageState extends State<TagsPage> {
               child: Stack(
                 children: <Widget>[
                   WhenRebuilder<TagService>(
-                    // ignore: missing_return
                     models: [tagServiceRM],
                     initState: (_, service) =>
                         service.setState((s) => s.initState()),
-                    // ignore: missing_return
                     onIdle: () => Container(),
                     onWaiting: () => Center(child: DailyProgressIndicator()),
                     onError: (error) => Container(
