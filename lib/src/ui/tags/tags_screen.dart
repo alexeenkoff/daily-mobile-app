@@ -24,7 +24,6 @@ class _TagsPageState extends State<TagsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
       body: Container(
         margin: EdgeInsets.only(left: 16.0, right: 16.0, top: 64.0),
         child: Column(
