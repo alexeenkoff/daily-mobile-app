@@ -7,8 +7,8 @@ class TagService {
 
   TagService(this._tagRestRepository, this._tagStorageRepository);
 
-  List<Tag> tags;
-  Set<Tag> selectedTags;
+  List<Tag> tags = [];
+  Set<Tag> selectedTags = new Set();
   bool needShowExplanation = true;
 
   void initState() async {
