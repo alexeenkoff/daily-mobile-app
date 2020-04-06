@@ -10,17 +10,16 @@ class TagSearch extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => TagSearchState(_searchFun);
+  State<StatefulWidget> createState() => TagSearchState();
   final ValueChanged<String> _searchFun;
 }
 
 class TagSearchState extends State<TagSearch> {
-  final ValueChanged<String> _searchFun;
   final _searchController = TextEditingController();
   Timer _debounce;
   String _searchText = '';
 
-  TagSearchState(this._searchFun);
+  TagSearchState();
 
   @override
   void initState() {
@@ -33,7 +32,7 @@ class TagSearchState extends State<TagSearch> {
       _searchText = _searchController.text;
       if (_debounce?.isActive ?? false) _debounce.cancel();
       _debounce = Timer(const Duration(milliseconds: 1000), () {
-        _searchFun(_searchText);
+        widget._searchFun(_searchText);
       });
     }
   }

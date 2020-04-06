@@ -3,10 +3,9 @@ import 'package:daily_mobile_app/src/domain/interfaces/tag_repositoty.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TagStorageRepositoryImpl implements TagStorageRepository {
-  final Future<SharedPreferences> _sharedPreferences;
   static const String _key = 'TagStorageRepositoryImpl::tagsKey';
 
-  TagStorageRepositoryImpl(this._sharedPreferences);
+  TagStorageRepositoryImpl();
 
   @override
   Future<void> addSelectedTag(Tag tag) {
@@ -18,7 +17,7 @@ class TagStorageRepositoryImpl implements TagStorageRepository {
 
   @override
   Future<List<Tag>> getSelectedTags() {
-    return _sharedPreferences.then((preferences) {
+    return SharedPreferences.getInstance().then((preferences) {
       return Future.value(preferences.getStringList(_key) ?? List());
     }).then((strings) {
       return strings.map((string) => Tag(string, true)).toList();
@@ -26,7 +25,7 @@ class TagStorageRepositoryImpl implements TagStorageRepository {
   }
 
   Future<void> _saveSelectedTags(List<Tag> tags) {
-    return _sharedPreferences.then((preferences) {
+    return SharedPreferences.getInstance().then((preferences) {
       final strings = tags.map((tag) => tag.text).toList();
       preferences.setStringList(_key, strings);
     });

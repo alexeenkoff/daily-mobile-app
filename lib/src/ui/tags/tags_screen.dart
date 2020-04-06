@@ -18,8 +18,7 @@ class TagsPage extends StatefulWidget {
 }
 
 class _TagsPageState extends State<TagsPage> {
-  GlobalKey<TagCounterState> _tagCounterKey = GlobalKey();
-  final tagServiceRM = Injector.getAsReactive<TagService>();
+  final ReactiveModel<TagService> tagServiceRM = Injector.getAsReactive<TagService>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,23 +36,28 @@ class _TagsPageState extends State<TagsPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Expanded(
-                        flex: 1,
-                        child: StateBuilder<TagService>(
-                          models: [tagServiceRM],
-                          onRebuildState: (_, tagServiceVM) {
-                            _tagCounterKey.currentState.updateCount(
-                                tagServiceVM.value.selectedTags.length);
-                          },
-                          builder: (_, tagServiceVM) {
-                            return TagCounter(key: _tagCounterKey);
-                          },
-                        )),
+                    StateBuilder(
+                      models: [tagServiceRM],
+                      builder: (context, _) {
+                        int selectedCount = tagServiceRM.state.selectedTags?.length ?? 0;
+                        return Expanded(
+                          flex: 1,
+                          child: TagCounter(
+                            key: Key('tagCounter $selectedCount'),
+                            count: selectedCount,
+                          ),
+                        );
+                      },
+                    ),
                     Container(margin: EdgeInsets.only(left: 8, right: 8)),
                     Expanded(
-                        flex: 4,
-                        child: TagSearch((query) => tagServiceRM
-                            .setState((state) => state.loadTags(query))))
+                      flex: 4,
+                      child: TagSearch(
+                        (query) => tagServiceRM.setState(
+                          (state) => state.loadTags(query)
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -82,7 +86,6 @@ class _TagsPageState extends State<TagsPage> {
                             spacing: 8,
                             runSpacing: 16,
                             children: _content(tagService),
-//                              ],
                           ),
                         ),
                       );
@@ -101,20 +104,16 @@ class _TagsPageState extends State<TagsPage> {
   }
 
   List<Widget> _content(TagService tagService) {
-    Widget explanation =
-        tagService.needShowExplanation ? TagExplanationText() : null;
     List<Widget> tags = tagService.tags
         .map((tag) => TagWidget('#' + tag.text, tag.isChecked, _onTagPress))
         .toList();
-    return explanation != null ? [explanation, ...tags] : tags;
+    return [
+      if (tagService.needShowExplanation) TagExplanationText(),
+      ...tags,
+    ];
   }
 
   _onTagPress(TagPressedResult result) {
-    setState(() {
-      tagServiceRM.setState((state) {
-        state.onTagClick(result.text, result.checked);
-        return;
-      });
-    });
+    tagServiceRM.setState((state) => state.onTagClick(result.text, result.checked));
   }
 }

@@ -9,12 +9,8 @@ class TagRestRepositoryImpl extends TagRestRepository {
 
   @override
   Future<List<Tag>> getPopularTags() {
-    return Future(() {
-      return _apiClient.getPopularTags().then((responses) {
-        var result =
-            responses.map((response) => Tag(response.name, false)).toList();
-        return Future.value(result);
-      });
+    return _apiClient.getPopularTags().then((responses) {
+      return responses.map((response) => Tag(response.name, false)).toList();
     });
   }
 
