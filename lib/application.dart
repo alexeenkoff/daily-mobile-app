@@ -1,6 +1,6 @@
 import 'package:daily_mobile_app/src/api/api_client_impl.dart';
-import 'package:daily_mobile_app/src/data/repository/tag_rest_rep_impl.dart';
-import 'package:daily_mobile_app/src/data/repository/tag_storage_rep_impl.dart';
+import 'package:daily_mobile_app/src/data/repository/tag/tag_rest_rep_impl.dart';
+import 'package:daily_mobile_app/src/data/repository/tag/tag_storage_rep_impl.dart';
 import 'package:daily_mobile_app/src/data/service/tag/tag_service.dart';
 import 'package:daily_mobile_app/src/ui/splash/splash_screen.dart';
 import 'package:daily_mobile_app/src/ui/tags/tags_screen.dart';
