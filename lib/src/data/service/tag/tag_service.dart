@@ -7,9 +7,12 @@ class TagService {
 
   TagService(this._tagRestRepository, this._tagStorageRepository);
 
+  final int _needTagsCountToEnableAllSet = 5;
+
   List<Tag> tags = [];
   Set<Tag> selectedTags = new Set();
   bool needShowExplanation = true;
+  bool enableAllSet = false;
 
   void initState() async {
     final restTags = await _tagRestRepository.getPopularTags();
@@ -52,7 +55,7 @@ class TagService {
             ? _tagStorageRepository.removeSelectedTag(needDelete)
             : Future.value();
       }
-    });
+    }).whenComplete(() => _calculateShowAllSet());
   }
 
   Future<List<Tag>> _mergeWithSelected(
@@ -65,6 +68,10 @@ class TagService {
       });
       return Future.value(result);
     });
+  }
+
+  void _calculateShowAllSet() {
+    enableAllSet = selectedTags.length >= _needTagsCountToEnableAllSet;
   }
 }
 

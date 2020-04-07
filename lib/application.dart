@@ -25,16 +25,16 @@ class Application extends StatelessWidget {
               title: 'Daily',
               theme: appTheme(),
               routes: {
+                Routes.tags: (context) => TagsPage(),
                 Routes.posts: (_) => PostsPage(),
-                Routes.splash: (context) => SplashPage(),
-                Routes.tags: (context) => TagsPage()
+//                Routes.splash: (context) => SplashPage()
               },
             ));
   }
 }
 
 class Routes {
-  static final tags = '/tags';
+  static final tags = '/';
   static final splash = '/';
   static final posts = '/posts';
 }

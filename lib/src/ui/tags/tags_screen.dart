@@ -18,7 +18,8 @@ class TagsPage extends StatefulWidget {
 }
 
 class _TagsPageState extends State<TagsPage> {
-  final ReactiveModel<TagService> tagServiceRM = Injector.getAsReactive<TagService>();
+  final ReactiveModel<TagService> tagServiceRM =
+      Injector.getAsReactive<TagService>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,8 @@ class _TagsPageState extends State<TagsPage> {
                     StateBuilder(
                       models: [tagServiceRM],
                       builder: (context, _) {
-                        int selectedCount = tagServiceRM.state.selectedTags?.length ?? 0;
+                        int selectedCount =
+                            tagServiceRM.state.selectedTags?.length ?? 0;
                         return Expanded(
                           flex: 1,
                           child: TagCounter(
@@ -53,9 +55,8 @@ class _TagsPageState extends State<TagsPage> {
                     Expanded(
                       flex: 4,
                       child: TagSearch(
-                        (query) => tagServiceRM.setState(
-                          (state) => state.loadTags(query)
-                        ),
+                        (query) => tagServiceRM
+                            .setState((state) => state.loadTags(query)),
                       ),
                     )
                   ],
@@ -93,7 +94,23 @@ class _TagsPageState extends State<TagsPage> {
                   ),
                   Align(
                       alignment: Alignment.bottomCenter,
-                      child: TagBottomControl())
+                      child: StateBuilder(
+                        models: [tagServiceRM],
+                        builder: (_, model) {
+                          return tagServiceRM.value.enableAllSet
+                              ? TagBottomControl(
+                                  onSkipClick: () => _onSkipClick(),
+                                  onDoneClick: () => _onDoneClick(),
+                                )
+                              : TagBottomControl(
+                                  onSkipClick: () => _onSkipClick(),
+                                );
+                        },
+                        child: TagBottomControl(
+                          onSkipClick: () {},
+                          onDoneClick: () {},
+                        ),
+                      ))
                 ],
               ),
             ),
@@ -114,6 +131,11 @@ class _TagsPageState extends State<TagsPage> {
   }
 
   _onTagPress(TagPressedResult result) {
-    tagServiceRM.setState((state) => state.onTagClick(result.text, result.checked));
+    tagServiceRM
+        .setState((state) => state.onTagClick(result.text, result.checked));
   }
+
+  _onSkipClick() {}
+
+  _onDoneClick() {}
 }
