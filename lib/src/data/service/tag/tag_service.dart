@@ -20,6 +20,7 @@ class TagService {
       return Future.value(tags.toSet());
     });
     tags = await _mergeWithSelected(restTags, selectedTags.toList());
+    _calculateShowAllSet();
   }
 
   void loadTags([String searchQuery]) async {

@@ -57,7 +57,7 @@ class _TagBottomState extends State<TagBottomControl> {
                   child: InkWell(
                     borderRadius: BorderRadius.all(Radius.circular(4.0)),
                     child: _allSetContainer,
-                    onTap: () => widget._doneClickFun,
+                    onTap: () => widget._doneClickFun(),
                   ))
               : _allSetContainer
         ],

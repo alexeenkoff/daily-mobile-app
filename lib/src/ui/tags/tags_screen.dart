@@ -5,6 +5,7 @@ import 'package:daily_mobile_app/src/ui/tags/widget/tag_explanation_widget.dart'
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
+import '../../../application.dart';
 import 'widget/tag_counter_widget.dart';
 import 'widget/tag_search_widget.dart';
 import 'widget/tag_widget.dart';
@@ -100,16 +101,12 @@ class _TagsPageState extends State<TagsPage> {
                           return tagServiceRM.value.enableAllSet
                               ? TagBottomControl(
                                   onSkipClick: () => _onSkipClick(),
-                                  onDoneClick: () => _onDoneClick(),
+                                  onDoneClick: () => _onDoneClick(context),
                                 )
                               : TagBottomControl(
                                   onSkipClick: () => _onSkipClick(),
                                 );
-                        },
-                        child: TagBottomControl(
-                          onSkipClick: () {},
-                          onDoneClick: () {},
-                        ),
+                        }
                       ))
                 ],
               ),
@@ -137,5 +134,7 @@ class _TagsPageState extends State<TagsPage> {
 
   _onSkipClick() {}
 
-  _onDoneClick() {}
+  _onDoneClick(BuildContext context) {
+    Navigator.of(context).pushNamed(Routes.posts);
+  }
 }
