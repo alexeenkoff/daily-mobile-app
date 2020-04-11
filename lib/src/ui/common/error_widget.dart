@@ -9,6 +9,6 @@ class ErrorIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(this.text);
+    return Text(this.text, textAlign: TextAlign.center,);
   }
 }

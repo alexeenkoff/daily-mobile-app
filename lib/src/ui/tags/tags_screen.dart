@@ -77,10 +77,17 @@ class _TagsPageState extends State<TagsPage> {
                     // ignore: missing_return
                     onIdle: () => Container(),
                     onWaiting: () => Center(child: DailyProgressIndicator()),
-                    onError: (error) => Center(
-                        child: ErrorIndicator(
-                            "Oops! Something wrong happened."
-                                "Try to check your internet connection")),
+                    onError: (error) => Container(
+                      transform: Matrix4.translationValues(0, -30, 0),
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 50, right: 50),
+                        child: Center(
+                            child: ErrorIndicator(
+                          text: "Oops! Something wrong happened.\n"
+                              "Try reloading page",
+                        )),
+                      ),
+                    ),
                     onData: (tagService) {
                       return SingleChildScrollView(
                         child: Padding(
@@ -113,6 +120,13 @@ class _TagsPageState extends State<TagsPage> {
         .toList();
     return [
       if (tagService.needShowExplanation) TagExplanationText(),
+      if (tagService.tags.length == 0)
+        Padding(
+          padding: EdgeInsets.only(left: 50, right: 50, top: 50),
+          child: ErrorIndicator(
+            text: "Looks like we cannot find this for you.",
+          ),
+        ),
       ...tags,
     ];
   }
