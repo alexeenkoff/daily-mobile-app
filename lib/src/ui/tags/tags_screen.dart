@@ -77,16 +77,13 @@ class _TagsPageState extends State<TagsPage> {
                     // ignore: missing_return
                     onIdle: () => Container(),
                     onWaiting: () => Center(child: DailyProgressIndicator()),
-                    onError: (error) => Container(
-                      transform: Matrix4.translationValues(0, -30, 0),
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 50, right: 50),
-                        child: Center(
-                            child: ErrorIndicator(
-                          text: "Oops! Something wrong happened.\n"
-                              "Try reloading page",
-                        )),
-                      ),
+                    onError: (error) => Padding(
+                      padding: EdgeInsets.only(left: 50, right: 50),
+                      child: Center(
+                          child: ErrorIndicator(
+                            text: "Oops! Something wrong happened.\n"
+                                "Try reloading page",
+                          )),
                     ),
                     onData: (tagService) {
                       return SingleChildScrollView(
