@@ -1,4 +1,4 @@
-name: Dart CI
+name: Daily Mobile Pipeline
 
 on:
   push:
@@ -7,6 +7,20 @@ on:
       - feature/*
 
 jobs:
+  
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Flutter build
+        uses: Techno-Disaster/Flutter-Mate@v1.0.0
+        with:
+          args: pub get
+      - name: Run Flutter build
+        uses: Techno-Disaster/Flutter-Mate@v1.0.0
+        with:
+          args: build apk
+        
+      
 
   package-analysis:
 
