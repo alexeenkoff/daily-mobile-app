@@ -9,9 +9,17 @@ class PostsService {
   PostsService(this._tagStorageRepository, this._postsRestRepository);
 
   List<Post> posts = [];
+  var _page = 0;
 
   void initState() async {
     final savedTags = await _tagStorageRepository.getSelectedTags();
-    posts = await _postsRestRepository.getPosts(savedTags, 0, 10);
+    posts = await _postsRestRepository.getPosts(savedTags, _page, 10);
+  }
+
+  void loadNextPage() async {
+    _page++;
+    final savedTags = await _tagStorageRepository.getSelectedTags();
+    final nextPagePosts = await _postsRestRepository.getPosts(savedTags, _page, 10);
+    posts.addAll(nextPagePosts);
   }
 }

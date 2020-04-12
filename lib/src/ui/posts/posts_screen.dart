@@ -15,6 +15,17 @@ class PostsPage extends StatefulWidget {
 class _PostsPageState extends State<PostsPage> {
   final ReactiveModel<PostsService> postsServiceRM =
       Injector.getAsReactive<PostsService>();
+  ScrollController _controller = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(() {
+      if (_controller.position.pixels == _controller.position.maxScrollExtent) {
+        postsServiceRM.setState((service) => service.loadNextPage());
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +33,7 @@ class _PostsPageState extends State<PostsPage> {
       appBar: PostsAppBar(),
       body: Center(
         child: Container(
-          margin: EdgeInsets.only(left: 16.0, right: 16.0, top: 64.0),
+          margin: EdgeInsets.only(left: 16.0, right: 16.0),
           child: WhenRebuilder<PostsService>(
             models: [postsServiceRM],
             initState: (_, service) => service.setState((s) => s.initState()),
@@ -35,10 +46,12 @@ class _PostsPageState extends State<PostsPage> {
             onError: ((_) => Container()),
             //TODO
             onData: ((service) => ListView.builder(
-                itemCount: service.posts.length,
-                itemBuilder: (context, index) {
-                  return PostsItem(service.posts[index]);
-                })),
+                  itemCount: service.posts.length,
+                  itemBuilder: (context, index) {
+                    return PostsItem(service.posts[index]);
+                  },
+                  controller: _controller,
+                )),
           ),
         ),
       ),
