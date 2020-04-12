@@ -1,4 +1,5 @@
 import 'package:daily_mobile_app/src/data/service/tag/tag_service.dart';
+import 'package:daily_mobile_app/src/ui/common/error_widget.dart';
 import 'package:daily_mobile_app/src/ui/common/progress_indicator.dart';
 import 'package:daily_mobile_app/src/ui/tags/widget/tag_bottom_control_widget.dart';
 import 'package:daily_mobile_app/src/ui/tags/widget/tag_explanation_widget.dart';
@@ -18,7 +19,8 @@ class TagsPage extends StatefulWidget {
 }
 
 class _TagsPageState extends State<TagsPage> {
-  final ReactiveModel<TagService> tagServiceRM = Injector.getAsReactive<TagService>();
+  final ReactiveModel<TagService> tagServiceRM =
+      Injector.getAsReactive<TagService>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +42,8 @@ class _TagsPageState extends State<TagsPage> {
                     StateBuilder(
                       models: [tagServiceRM],
                       builder: (context, _) {
-                        int selectedCount = tagServiceRM.state.selectedTags?.length ?? 0;
+                        int selectedCount =
+                            tagServiceRM.state.selectedTags?.length ?? 0;
                         return Expanded(
                           flex: 1,
                           child: TagCounter(
@@ -54,9 +57,8 @@ class _TagsPageState extends State<TagsPage> {
                     Expanded(
                       flex: 4,
                       child: TagSearch(
-                        (query) => tagServiceRM.setState(
-                          (state) => state.loadTags(query)
-                        ),
+                        (query) => tagServiceRM
+                            .setState((state) => state.loadTags(query)),
                       ),
                     )
                   ],
@@ -75,10 +77,13 @@ class _TagsPageState extends State<TagsPage> {
                     // ignore: missing_return
                     onIdle: () => Container(),
                     onWaiting: () => Center(child: DailyProgressIndicator()),
-                    onError: (error) => Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(color: Colors.blue),
+                    onError: (error) => Padding(
+                      padding: EdgeInsets.only(left: 50, right: 50),
+                      child: Center(
+                          child: ErrorIndicator(
+                            text: "Oops! Something wrong happened.\n"
+                                "Try reloading page",
+                          )),
                     ),
                     onData: (tagService) {
                       return SingleChildScrollView(
@@ -112,11 +117,19 @@ class _TagsPageState extends State<TagsPage> {
         .toList();
     return [
       if (tagService.needShowExplanation) TagExplanationText(),
+      if (tagService.tags.length == 0)
+        Padding(
+          padding: EdgeInsets.only(left: 50, right: 50, top: 50),
+          child: ErrorIndicator(
+            text: "Looks like we cannot find this for you.",
+          ),
+        ),
       ...tags,
     ];
   }
 
   _onTagPress(TagPressedResult result) {
-    tagServiceRM.setState((state) => state.onTagClick(result.text, result.checked));
+    tagServiceRM
+        .setState((state) => state.onTagClick(result.text, result.checked));
   }
 }
