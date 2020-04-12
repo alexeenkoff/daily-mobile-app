@@ -1,3 +1,4 @@
+import 'package:daily_mobile_app/src/api/api_client.dart';
 import 'package:daily_mobile_app/src/api/model/post_response.dart';
 import 'package:daily_mobile_app/src/api/posts_client.dart';
 import 'package:daily_mobile_app/src/data/repository/posts/posts_rest_repository_impl.dart';
@@ -44,4 +45,4 @@ Map<String, dynamic> _fakePostJson(String id, String title) {
   };
 }
 
-class MockPostsClient extends Mock implements PostsClient {}
+class MockPostsClient extends Mock implements ApiClient {}
