@@ -12,6 +12,6 @@ class PostsService {
 
   void initState() async {
     final savedTags = await _tagStorageRepository.getSelectedTags();
-    posts = await _postsRestRepository.getPosts(savedTags, 0, 0);
+    posts = await _postsRestRepository.getPosts(savedTags, 0, 10);
   }
 }
