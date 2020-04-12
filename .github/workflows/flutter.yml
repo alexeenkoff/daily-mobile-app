@@ -14,12 +14,12 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: install dependencies
-      uses: geowatson/flutter-latest@1.0.0
+      uses: geowatson/flutter-latest@1.0.1
       with:
         args: pub get
 
     - name: run tests
-      uses: geowatson/flutter-latest@1.0.0
+      uses: geowatson/flutter-latest@1.0.1
       with:
         args: test
 
