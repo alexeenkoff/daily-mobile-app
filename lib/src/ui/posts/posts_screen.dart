@@ -46,9 +46,9 @@ class _PostsPageState extends State<PostsPage> {
             onError: ((_) => Container()),
             //TODO
             onData: ((service) => ListView.builder(
-                  itemCount: service.posts.length,
+                  itemCount: postsServiceRM.value.posts.length,
                   itemBuilder: (context, index) {
-                    return PostsItem(service.posts[index]);
+                    return PostsItem(postsServiceRM.value.posts[index]);
                   },
                   controller: _controller,
                 )),
@@ -56,5 +56,11 @@ class _PostsPageState extends State<PostsPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
