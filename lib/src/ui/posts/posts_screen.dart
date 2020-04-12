@@ -1,3 +1,4 @@
+import 'package:daily_mobile_app/src/ui/common/appbar_logo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,9 @@ class _PostsPageState extends State<PostsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('test'),
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: AppBarLogo(),
       ),
       body: Container(),
     );
