@@ -11,17 +11,9 @@ jobs:
     name: install dependencies
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - name: check the repo
+      uses: geowatson/flutter-latest@1.0.0
 
-    - name: install dependencies
-      uses: 'Dockerfile'
-      with:
-        args: pub get
-
-    - name: run tests
-      uses: 'Dockerfile'
-      with:
-        args: test
   package-analysis:
     runs-on: ubuntu-latest
     steps:
