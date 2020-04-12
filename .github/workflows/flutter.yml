@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: install dependencies
+    name: run testing
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -21,9 +21,10 @@ jobs:
     - name: run tests
       uses: geowatson/flutter-latest@1.0.0
       with:
-        args: build apk
+        args: test
 
   package-analysis:
+    name: analyze packages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2 # required
