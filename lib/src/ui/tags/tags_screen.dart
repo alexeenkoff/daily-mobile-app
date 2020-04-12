@@ -78,7 +78,7 @@ class _TagsPageState extends State<TagsPage> {
                     onError: (error) => Container(
                       width: 100,
                       height: 100,
-                      decoration: BoxDecorationcolor: Colors.blue),
+                      decoration: BoxDecoration(color: Colors.blue),
                     ),
                     onData: (tagService) {
                       return SingleChildScrollView(
