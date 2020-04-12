@@ -1,4 +1,5 @@
 import 'package:daily_mobile_app/src/data/service/tag/tag_service.dart';
+import 'package:daily_mobile_app/src/ui/common/error_widget.dart';
 import 'package:daily_mobile_app/src/ui/common/progress_indicator.dart';
 import 'package:daily_mobile_app/src/ui/tags/widget/tag_bottom_control_widget.dart';
 import 'package:daily_mobile_app/src/ui/tags/widget/tag_explanation_widget.dart';
@@ -74,10 +75,13 @@ class _TagsPageState extends State<TagsPage> {
                         service.setState((s) => s.initState()),
                     onIdle: () => Container(),
                     onWaiting: () => Center(child: DailyProgressIndicator()),
-                    onError: (error) => Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(color: Colors.blue),
+                    onError: (error) => Padding(
+                      padding: EdgeInsets.only(left: 50, right: 50),
+                      child: Center(
+                          child: ErrorIndicator(
+                            text: "Oops! Something wrong happened.\n"
+                                "Try reloading page",
+                          )),
                     ),
                     onData: (tagService) {
                       return SingleChildScrollView(
@@ -123,6 +127,13 @@ class _TagsPageState extends State<TagsPage> {
         .toList();
     return [
       if (tagService.needShowExplanation) TagExplanationText(),
+      if (tagService.tags.length == 0)
+        Padding(
+          padding: EdgeInsets.only(left: 50, right: 50, top: 50),
+          child: ErrorIndicator(
+            text: "Looks like we cannot find this for you.",
+          ),
+        ),
       ...tags,
     ];
   }
