@@ -14,12 +14,12 @@ jobs:
     - uses: actions/checkout@v1
 
     - name: install dependencies
-      uses: steebchen/flutter@v1.0.0
+      uses: 'Dockerfile'
       with:
         args: pub get
 
     - name: run tests
-      uses: steebchen/flutter@v1.0.0
+      uses: 'Dockerfile'
       with:
         args: test
   package-analysis:
