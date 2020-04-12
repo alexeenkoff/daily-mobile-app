@@ -14,7 +14,7 @@ jobs:
     - name: check the repo
       uses: geowatson/flutter-latest@1.0.0
     - name: run build
-      run: build apk
+      run: flutter build apk
 
   package-analysis:
     runs-on: ubuntu-latest
