@@ -11,10 +11,17 @@ jobs:
     name: install dependencies
     runs-on: ubuntu-latest
     steps:
-    - name: check the repo
+    - uses: actions/checkout@v1
+
+    - name: install dependencies
       uses: geowatson/flutter-latest@1.0.0
-    - name: run build
-      run: flutter build apk
+      with:
+        args: pub get
+
+    - name: run tests
+      uses: geowatson/flutter-latest@1.0.0
+      with:
+        args: build apk
 
   package-analysis:
     runs-on: ubuntu-latest
