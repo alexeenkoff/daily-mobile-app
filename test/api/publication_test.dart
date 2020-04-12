@@ -7,7 +7,7 @@ void main() {
   test('check publications', () async {
     final url = 'https://app.dailynow.co/v1/publications';
     final response = await http.get(url);
-    expect(response.statusCode, 900);
+    expect(response.statusCode, 200);
   });
 
   ApiClientImpl restClient;
