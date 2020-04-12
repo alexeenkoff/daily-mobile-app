@@ -1,4 +1,4 @@
-import 'package:daily_mobile_app/src/ui/common/posts_appbar.dart';
+import 'package:daily_mobile_app/src/ui/posts/widget/posts_appbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +14,5 @@ class _PostsPageState extends State<PostsPage> {
       appBar: PostsAppBar(),
       body: Container(),
     );
-    ;
   }
 }
