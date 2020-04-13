@@ -45,12 +45,7 @@ class _TagsPageState extends State<TagsPage> {
                         int selectedCount =
                             tagServiceRM.state.selectedTags?.length ?? 0;
                         return Expanded(
-                          flex: 1,
-                          child: TagCounter(
-                            key: Key('tagCounter $selectedCount'),
-                            count: selectedCount,
-                          ),
-                        );
+                            flex: 1, child: TagCounter(count: selectedCount));
                       },
                     ),
                     Container(margin: EdgeInsets.only(left: 8, right: 8)),
@@ -81,9 +76,9 @@ class _TagsPageState extends State<TagsPage> {
                       padding: EdgeInsets.only(left: 50, right: 50),
                       child: Center(
                           child: ErrorIndicator(
-                            text: "Oops! Something wrong happened.\n"
-                                "Try reloading page",
-                          )),
+                        text: "Oops! Something wrong happened.\n"
+                            "Try reloading page",
+                      )),
                     ),
                     onData: (tagService) {
                       return SingleChildScrollView(
