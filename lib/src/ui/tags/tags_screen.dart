@@ -79,9 +79,9 @@ class _TagsPageState extends State<TagsPage> {
                       padding: EdgeInsets.only(left: 50, right: 50),
                       child: Center(
                           child: ErrorIndicator(
-                            text: "Oops! Something wrong happened.\n"
-                                "Try reloading page",
-                          )),
+                        text: "Oops! Something wrong happened.\n"
+                            "Try reloading page",
+                      )),
                     ),
                     onData: (tagService) {
                       return SingleChildScrollView(
@@ -100,18 +100,15 @@ class _TagsPageState extends State<TagsPage> {
                   Align(
                       alignment: Alignment.bottomCenter,
                       child: StateBuilder(
-                        models: [tagServiceRM],
-                        builder: (_, model) {
-                          return tagServiceRM.value.enableAllSet
-                              ? TagBottomControl(
-                                  onSkipClick: () => _onSkipClick(),
-                                  onDoneClick: () => _onDoneClick(context),
-                                )
-                              : TagBottomControl(
-                                  onSkipClick: () => _onSkipClick(),
-                                );
-                        }
-                      ))
+                          models: [tagServiceRM],
+                          builder: (_, model) {
+                            return TagBottomControl(
+                              onSkipClick: _onSkipClick(),
+                              onDoneClick: tagServiceRM.value.enableAllSet
+                                  ? () => _onDoneClick(context)
+                                  : null,
+                            );
+                          }))
                 ],
               ),
             ),

@@ -7,7 +7,7 @@ class TagService {
 
   TagService(this._tagRestRepository, this._tagStorageRepository);
 
-  final int _needTagsCountToEnableAllSet = 5;
+  final int minEnableTagCount = 5;
 
   List<Tag> tags = [];
   Set<Tag> selectedTags = new Set();
@@ -16,9 +16,9 @@ class TagService {
 
   void initState() async {
     final restTags = await _tagRestRepository.getPopularTags();
-    selectedTags = await _tagStorageRepository.getSelectedTags().then((tags) {
-      return Future.value(tags.toSet());
-    });
+    selectedTags = await _tagStorageRepository
+        .getSelectedTags()
+        .then((tags) => tags.toSet());
     tags = await _mergeWithSelected(restTags, selectedTags.toList());
     _calculateShowAllSet();
   }
@@ -72,7 +72,7 @@ class TagService {
   }
 
   void _calculateShowAllSet() {
-    enableAllSet = selectedTags.length >= _needTagsCountToEnableAllSet;
+    enableAllSet = selectedTags.length >= minEnableTagCount;
   }
 }
 
