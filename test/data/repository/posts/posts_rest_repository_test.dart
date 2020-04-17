@@ -1,6 +1,5 @@
 import 'package:daily_mobile_app/src/api/api_client.dart';
 import 'package:daily_mobile_app/src/api/model/post_response.dart';
-import 'package:daily_mobile_app/src/api/posts_client.dart';
 import 'package:daily_mobile_app/src/data/repository/posts/posts_rest_repository_impl.dart';
 import 'package:daily_mobile_app/src/domain/entities/tag.dart';
 import 'package:mockito/mockito.dart';
