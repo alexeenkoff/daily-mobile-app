@@ -30,7 +30,7 @@ class PostsItem extends StatelessWidget {
     } else if (publishedAt.inMinutes > 60) {
       timeFromPublication = "${publishedAt.inMinutes ~/ 60}h ago";
     } else {
-      timeFromPublication = "${publishedAt}m ago";
+      timeFromPublication = "${publishedAt.inMinutes}m ago";
     }
 
     var imageContainer = LayoutBuilder(
