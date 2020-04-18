@@ -1,4 +1,4 @@
-import 'package:daily_mobile_app/src/data/repository/tag_rest_rep_impl.dart';
+import 'package:daily_mobile_app/src/data/repository/tag/tag_rest_rep_impl.dart';
 import 'package:daily_mobile_app/src/data/service/tag/tag_service.dart';
 import 'package:daily_mobile_app/src/domain/entities/tag.dart';
 import 'package:daily_mobile_app/src/domain/interfaces/tag_repositoty.dart';

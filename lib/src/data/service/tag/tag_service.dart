@@ -7,16 +7,20 @@ class TagService {
 
   TagService(this._tagRestRepository, this._tagStorageRepository);
 
+  final int minEnableTagCount = 5;
+
   List<Tag> tags = [];
   Set<Tag> selectedTags = new Set();
   bool needShowExplanation = true;
+  bool enableAllSet = false;
 
   void initState() async {
     final restTags = await _tagRestRepository.getPopularTags();
-    selectedTags = await _tagStorageRepository.getSelectedTags().then((tags) {
-      return Future.value(tags.toSet());
-    });
+    selectedTags = await _tagStorageRepository
+        .getSelectedTags()
+        .then((tags) => tags.toSet());
     tags = await _mergeWithSelected(restTags, selectedTags.toList());
+    _calculateShowAllSet();
   }
 
   void loadTags([String searchQuery]) async {
@@ -52,7 +56,7 @@ class TagService {
             ? _tagStorageRepository.removeSelectedTag(needDelete)
             : Future.value();
       }
-    });
+    }).whenComplete(() => _calculateShowAllSet());
   }
 
   Future<List<Tag>> _mergeWithSelected(
@@ -65,6 +69,10 @@ class TagService {
       });
       return Future.value(result);
     });
+  }
+
+  void _calculateShowAllSet() {
+    enableAllSet = selectedTags.length >= minEnableTagCount;
   }
 }
 
