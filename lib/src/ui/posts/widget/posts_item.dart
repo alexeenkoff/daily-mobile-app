@@ -25,7 +25,7 @@ class PostsItem extends StatelessWidget {
     final publishedAt =
         DateTime.now().difference(DateTime.parse(_post.publishedAt));
     String timeFromPublication;
-    if (publishedAt.inMinutes > 60 * 24 * 1.3) {
+    if (publishedAt.inMinutes > 60 * 24 * 2) {
       timeFromPublication = DateFormat.yMMMMd().format(DateTime.parse(_post.publishedAt));
     } else if (publishedAt.inMinutes > 60) {
       timeFromPublication = "${publishedAt.inMinutes ~/ 60}h ago";
