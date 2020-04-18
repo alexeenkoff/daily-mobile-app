@@ -1,6 +1,7 @@
 import 'package:daily_mobile_app/src/domain/entities/post.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class PostsItem extends StatelessWidget {
   final Post _post;
@@ -22,18 +23,15 @@ class PostsItem extends StatelessWidget {
             .map((v) => "#" + v[0].toUpperCase() + v.substring(1))
             .join(", ");
     final publishedAt =
-        DateTime.now().difference(DateTime.parse(_post.publishedAt)).inMinutes;
+        DateTime.now().difference(DateTime.parse(_post.publishedAt));
     String timeFromPublication;
-    if (publishedAt > 60 * 24 * 7) {
-      timeFromPublication = "${publishedAt ~/ (60 * 24 * 7)}d";
-    } else if (publishedAt > 60 * 24) {
-      timeFromPublication = "${publishedAt ~/ (60 * 24)}d";
-    } else if (publishedAt > 60) {
-      timeFromPublication = "${publishedAt ~/ 60}h";
+    if (publishedAt.inMinutes > 60 * 24 * 1.3) {
+      timeFromPublication = DateFormat.yMMMMd().format(DateTime.parse(_post.publishedAt));
+    } else if (publishedAt.inMinutes > 60) {
+      timeFromPublication = "${publishedAt.inMinutes ~/ 60}h ago";
     } else {
-      timeFromPublication = "${publishedAt}m";
+      timeFromPublication = "${publishedAt}m ago";
     }
-    timeFromPublication += " ago";
 
     var imageContainer = LayoutBuilder(
         builder: (BuildContext buildContext, BoxConstraints constraints) {
