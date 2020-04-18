@@ -22,15 +22,16 @@ class PostsItem extends StatelessWidget {
         : _post.tags
             .map((v) => "#" + v[0].toUpperCase() + v.substring(1))
             .join(", ");
-    final publishedAt =
-        DateTime.now().difference(DateTime.parse(_post.publishedAt));
+    final createdAt =
+        DateTime.now().difference(DateTime.parse(_post.createdAt));
     String timeFromPublication;
-    if (publishedAt.inMinutes > 60 * 24 * 2) {
-      timeFromPublication = DateFormat.yMMMMd().format(DateTime.parse(_post.publishedAt));
-    } else if (publishedAt.inMinutes > 60) {
-      timeFromPublication = "${publishedAt.inMinutes ~/ 60}h ago";
+    if (createdAt.inMinutes > 60 * 24 * 2) {
+      timeFromPublication =
+          DateFormat.yMMMMd().format(DateTime.parse(_post.createdAt));
+    } else if (createdAt.inMinutes > 60) {
+      timeFromPublication = "${createdAt.inMinutes ~/ 60}h ago";
     } else {
-      timeFromPublication = "${publishedAt.inMinutes}m ago";
+      timeFromPublication = "${createdAt.inMinutes}m ago";
     }
 
     var imageContainer = LayoutBuilder(

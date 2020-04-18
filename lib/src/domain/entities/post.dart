@@ -7,7 +7,7 @@ class Post {
   final List<String> tags;
   final int readTime;
   final String publicationImage;
-  final String publishedAt;
+  final String createdAt;
 
   Post.fromResponse(PostResponse response)
       : id = response.id,
@@ -16,5 +16,5 @@ class Post {
         tags = response.tags,
         readTime = response.readTime,
         publicationImage = response.publication.image,
-        publishedAt = response.publishedAt;
+        createdAt = response.createdAt;
 }
