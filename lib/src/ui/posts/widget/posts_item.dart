@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:daily_mobile_app/src/domain/entities/post.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,14 +6,24 @@ import 'package:intl/intl.dart';
 
 class PostsItem extends StatelessWidget {
   final Post _post;
+  final maxTags = 2;
+  final cardHeight = 280.0; // estimated card height based on intuition
 
   const PostsItem(this._post, {Key key}) : super(key: key);
+
+  String timeFromPublicationDiff(Duration createdAt) {
+    if (createdAt.inMinutes > 60 * 24 * 2) {
+      return DateFormat.yMMMMd().format(DateTime.parse(_post.createdAt));
+    } else if (createdAt.inMinutes > 60) {
+      return "${createdAt.inMinutes ~/ 60}h ago";
+    } else {
+      return "${createdAt.inMinutes}m ago";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final cornerRadius = Radius.circular(10);
-    final cardHeight = 280.0; // estimated card height based on intuition
-    final maxTags = 2;
     var tags = _post.tags.length > maxTags
         ? _post.tags
                 .sublist(0, maxTags)
@@ -22,17 +33,8 @@ class PostsItem extends StatelessWidget {
         : _post.tags
             .map((v) => "#" + v[0].toUpperCase() + v.substring(1))
             .join(", ");
-    final createdAt =
-        DateTime.now().difference(DateTime.parse(_post.createdAt));
-    String timeFromPublication;
-    if (createdAt.inMinutes > 60 * 24 * 2) {
-      timeFromPublication =
-          DateFormat.yMMMMd().format(DateTime.parse(_post.createdAt));
-    } else if (createdAt.inMinutes > 60) {
-      timeFromPublication = "${createdAt.inMinutes ~/ 60}h ago";
-    } else {
-      timeFromPublication = "${createdAt.inMinutes}m ago";
-    }
+    String timeFromPublication = timeFromPublicationDiff(
+        DateTime.now().difference(DateTime.parse(_post.createdAt)));
 
     var imageContainer = LayoutBuilder(
         builder: (BuildContext buildContext, BoxConstraints constraints) {
@@ -54,7 +56,7 @@ class PostsItem extends StatelessWidget {
     });
 
     var infoContainer = Container(
-      padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 15),
+      padding: EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 16),
       decoration: BoxDecoration(
           color: Theme.of(context).primaryColor,
           borderRadius: BorderRadius.all(cornerRadius)),
@@ -72,21 +74,26 @@ class PostsItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
+              AutoSizeText(
                 tags,
                 style: TextStyle(
-                    color: Color.fromARGB(255, 153, 153, 156), fontSize: 12),
+                    color: Theme.of(context).secondaryHeaderColor,
+                    fontSize: 12),
+                maxLines: 1,
               ),
-              _post.readTime != null
+              _post.readTime != null && _post.readTime != 0
                   ? Text("${_post?.readTime} min read",
                       style: TextStyle(
-                          color: Color.fromARGB(255, 153, 153, 156),
+                          color: Theme.of(context).secondaryHeaderColor,
                           fontSize: 12))
                   : Text(""),
             ],
           ),
-          Divider(
-            color: Color.fromARGB(255, 77, 77, 77),
+          Padding(
+            padding: EdgeInsets.only(top: 4, bottom: 4),
+            child: Divider(
+              color: Theme.of(context).dividerColor,
+            ),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,15 +106,15 @@ class PostsItem extends StatelessWidget {
                       child: FittedBox(
                         fit: BoxFit.fitWidth,
                         child: Image.network(_post.publicationImage,
-                            width: 25, height: 25),
+                            width: 24, height: 24),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 10),
+                      padding: EdgeInsets.only(left: 16),
                       child: Text(
                         timeFromPublication,
                         style: TextStyle(
-                            color: Color.fromARGB(255, 153, 153, 156),
+                            color: Theme.of(context).secondaryHeaderColor,
                             fontSize: 12,
                             fontStyle: FontStyle.italic),
                       ),
@@ -118,17 +125,17 @@ class PostsItem extends StatelessWidget {
               Row(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(right: 10),
+                    padding: EdgeInsets.only(right: 8),
                     child: Image.asset(
                       'assets/images/bookmark.png',
-                      height: 20,
-                      width: 20,
+                      height: 24,
+                      width: 24,
                     ),
                   ),
                   Image.asset(
                     'assets/images/three_dots.png',
-                    height: 20,
-                    width: 20,
+                    height: 24,
+                    width: 24,
                   )
                 ],
               )
@@ -139,12 +146,11 @@ class PostsItem extends StatelessWidget {
     );
 
     return Container(
-        child: Container(
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
       child: Column(children: <Widget>[imageContainer, infoContainer]),
-    ));
+    );
   }
 }
