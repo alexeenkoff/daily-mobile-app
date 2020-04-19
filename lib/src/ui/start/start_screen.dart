@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../../application.dart';
+
 class StartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -18,6 +20,9 @@ class StartPage extends StatelessWidget {
                 margin: EdgeInsets.only(top: 16),
                 child: RaisedButton(
                   child: Text('github'),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.auth);
+                  },
                 ),
               ),
               Container(

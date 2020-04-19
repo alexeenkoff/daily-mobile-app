@@ -2,6 +2,7 @@ import 'package:daily_mobile_app/src/api/api_client_impl.dart';
 import 'package:daily_mobile_app/src/data/repository/tag_rest_rep_impl.dart';
 import 'package:daily_mobile_app/src/data/repository/tag_storage_rep_impl.dart';
 import 'package:daily_mobile_app/src/data/service/tag/tag_service.dart';
+import 'package:daily_mobile_app/src/ui/auth/auth_screen.dart';
 import 'package:daily_mobile_app/src/ui/start/start_screen.dart';
 import 'package:daily_mobile_app/src/ui/tags/tags_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,7 +26,8 @@ class Application extends StatelessWidget {
               theme: appTheme(),
               routes: {
                 Routes.start: (_) => StartPage(),
-                Routes.tags: (context) => TagsPage()
+                Routes.tags: (context) => TagsPage(),
+                Routes.auth: (_) => AuthWebPage(),
               },
             ));
   }
@@ -34,4 +36,5 @@ class Application extends StatelessWidget {
 class Routes {
   static final tags = '/tags';
   static final start = '/';
+  static final auth = '/auth';
 }
