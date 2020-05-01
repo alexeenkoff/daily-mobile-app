@@ -36,22 +36,12 @@ class _AuthPageState extends State<AuthWebPage> {
       },
       javascriptMode: JavascriptMode.unrestricted,
       initialUrl: _authServiceWM.value.authUrl,
-      onPageStarted: (url) {
-        if (url.contains('moz-extension://')) {
-          _parseRedirect(url);
-        }
-      },
-      onWebResourceError: (error) {
-        int x = 0;
-      },
+      onPageStarted: (url) => _authServiceWM.value.pageLoaded(url),
+      onWebResourceError: (error) => _authServiceWM.value.pageLoadFailed(error),
     );
   }
 
   void clearCookies(CookieManager manager) async {
     manager.clearCookies();
-  }
-
-  void _parseRedirect(String url) {
-    int x = 0;
   }
 }
