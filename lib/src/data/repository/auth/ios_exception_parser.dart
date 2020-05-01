@@ -5,7 +5,10 @@ class IOSExceptionParser {
 
   String getUrlFromErrorDescription() {
     var regExp = RegExp('moz-extension:([^,]+)');
-    var firstMatch = regExp.firstMatch(_errorDescription);
-    return _errorDescription.substring(firstMatch.start, firstMatch.end);
+    if (regExp.hasMatch(_errorDescription)) {
+      var firstMatch = regExp.firstMatch(_errorDescription);
+      return _errorDescription.substring(firstMatch.start, firstMatch.end);
+    } else
+      throw FormatException;
   }
 }
