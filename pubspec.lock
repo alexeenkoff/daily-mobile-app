@@ -15,6 +15,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.5.2"
+  asn1lib:
+    dependency: transitive
+    description:
+      name: asn1lib
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.15"
   async:
     dependency: transitive
     description:
@@ -50,6 +57,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  corsac_jwt:
+    dependency: "direct main"
+    description:
+      name: corsac_jwt
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.1"
   crypto:
     dependency: transitive
     description:
@@ -79,13 +93,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_webview_plugin:
-    dependency: "direct main"
-    description:
-      name: flutter_webview_plugin
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.11"
   gql:
     dependency: transitive
     description:
@@ -121,6 +128,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.4"
+  logging:
+    dependency: transitive
+    description:
+      name: logging
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.11.4"
   matcher:
     dependency: transitive
     description:
@@ -170,6 +184,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.0"
+  pointycastle:
+    dependency: transitive
+    description:
+      name: pointycastle
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   quiver:
     dependency: transitive
     description:
@@ -177,6 +198,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
+  rsa_pkcs:
+    dependency: transitive
+    description:
+      name: rsa_pkcs
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.0"
   rxdart:
     dependency: transitive
     description:
@@ -294,6 +322,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.5"
+  webview_flutter:
+    dependency: "direct main"
+    description:
+      name: webview_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.20+2"
   xml:
     dependency: transitive
     description:
@@ -302,5 +337,5 @@ packages:
     source: hosted
     version: "3.5.0"
 sdks:
-  dart: ">=2.6.0 <3.0.0"
-  flutter: ">=1.12.13+hotfix.4 <2.0.0"
+  dart: ">=2.7.0 <3.0.0"
+  flutter: ">=1.12.13+hotfix.5 <2.0.0"
