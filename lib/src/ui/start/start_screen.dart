@@ -1,3 +1,4 @@
+import 'package:daily_mobile_app/src/domain/interfaces/auth_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,8 @@ class StartPage extends StatelessWidget {
                 child: RaisedButton(
                   child: Text('github'),
                   onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.auth);
+                    Navigator.of(context)
+                        .pushNamed(Routes.auth, arguments: Provider.github);
                   },
                 ),
               ),
