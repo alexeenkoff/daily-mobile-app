@@ -46,6 +46,8 @@ flutter:
         - asset: fonts/DejaVuSansMono.ttf
         - asset: fonts/DejaVuSansMono-Oblique.ttf
         - asset: fonts/DejaVuSansMono-Bold.ttf
+  assets:
+    - assets/images/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

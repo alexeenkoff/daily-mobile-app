@@ -6,6 +6,7 @@ import 'package:daily_mobile_app/src/ui/tags/widget/tag_explanation_widget.dart'
 import 'package:flutter/material.dart';
 import 'package:states_rebuilder/states_rebuilder.dart';
 
+import '../../../application.dart';
 import 'widget/tag_counter_widget.dart';
 import 'widget/tag_search_widget.dart';
 import 'widget/tag_widget.dart';
@@ -25,7 +26,6 @@ class _TagsPageState extends State<TagsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
       body: Container(
         margin: EdgeInsets.only(left: 16.0, right: 16.0, top: 64.0),
         child: Column(
@@ -70,20 +70,18 @@ class _TagsPageState extends State<TagsPage> {
               child: Stack(
                 children: <Widget>[
                   WhenRebuilder<TagService>(
-                    // ignore: missing_return
                     models: [tagServiceRM],
                     initState: (_, service) =>
                         service.setState((s) => s.initState()),
-                    // ignore: missing_return
                     onIdle: () => Container(),
                     onWaiting: () => Center(child: DailyProgressIndicator()),
                     onError: (error) => Padding(
                       padding: EdgeInsets.only(left: 50, right: 50),
                       child: Center(
                           child: ErrorIndicator(
-                            text: "Oops! Something wrong happened.\n"
-                                "Try reloading page",
-                          )),
+                        text: "Oops! Something wrong happened.\n"
+                            "Try reloading page",
+                      )),
                     ),
                     onData: (tagService) {
                       return SingleChildScrollView(
@@ -101,7 +99,16 @@ class _TagsPageState extends State<TagsPage> {
                   ),
                   Align(
                       alignment: Alignment.bottomCenter,
-                      child: TagBottomControl())
+                      child: StateBuilder(
+                          models: [tagServiceRM],
+                          builder: (_, model) {
+                            return TagBottomControl(
+                              onSkipClick: _onSkipClick(),
+                              onDoneClick: tagServiceRM.value.enableAllSet
+                                  ? () => _onDoneClick(context)
+                                  : null,
+                            );
+                          }))
                 ],
               ),
             ),
@@ -131,5 +138,11 @@ class _TagsPageState extends State<TagsPage> {
   _onTagPress(TagPressedResult result) {
     tagServiceRM
         .setState((state) => state.onTagClick(result.text, result.checked));
+  }
+
+  _onSkipClick() {}
+
+  _onDoneClick(BuildContext context) {
+    Navigator.of(context).pushNamed(Routes.posts);
   }
 }

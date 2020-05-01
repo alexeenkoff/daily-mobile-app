@@ -20,6 +20,7 @@ class _AuthPageState extends State<AuthWebPage> {
     final Provider provider = ModalRoute.of(context).settings.arguments;
     _authServiceWM.value.initState(provider);
     return WhenRebuilder(
+      models: [_authServiceWM],
       onIdle: () => Container(),
       onData: (_) => Container(),
       onError: (_) => Container(),
