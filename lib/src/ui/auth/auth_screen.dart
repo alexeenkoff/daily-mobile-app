@@ -1,3 +1,4 @@
+import 'package:daily_mobile_app/src/data/repository/auth/web_auth_url_provider.dart';
 import 'package:daily_mobile_app/src/data/service/auth/auth_service.dart';
 import 'package:daily_mobile_app/src/domain/interfaces/auth_repository.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,10 @@ class AuthWebPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthWebPage> {
-  ReactiveModel<AuthService> _authServiceWM =
-      Injector.getAsReactive<AuthService>();
+  ReactiveModel<AuthService> _authServiceWM = ReactiveModel.create(
+      AuthService(AuthUrlProviderImpl(), Injector.get<AuthRepository>()));
+
+//      Injector.getAsReactive<AuthService>();
 
   @override
   Widget build(BuildContext context) {

@@ -13,7 +13,7 @@ class AuthService {
   String authUrl;
 
   void initState(Provider provider) {
-    authUrl = _webAuthUrlProvider.getUrl(provider);
+    authUrl = _webAuthUrlProvider.getUrl(provider,'');
   }
 
   void pageLoaded(String url) {
