@@ -1,7 +1,7 @@
 import 'package:daily_mobile_app/src/common/lazy.dart';
 import 'package:daily_mobile_app/src/data/repository/auth/ios_exception_parser.dart';
 import 'package:daily_mobile_app/src/data/repository/auth/web_auth_url_provider.dart';
-import 'package:daily_mobile_app/src/domain/entities/code_challenge.dart';
+import 'package:daily_mobile_app/src/domain/entities/auth/code_challenge.dart';
 import 'package:daily_mobile_app/src/domain/interfaces/auth_repository.dart';
 import 'package:webview_flutter/platform_interface.dart';
 

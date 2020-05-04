@@ -1,4 +1,4 @@
-import 'package:daily_mobile_app/src/domain/entities/auth_rediredct_result.dart';
+import 'package:daily_mobile_app/src/domain/entities/auth/auth_rediredct_result.dart';
 import 'package:daily_mobile_app/src/data/repository/auth/redirect_url_parser.dart';
 import 'package:flutter_test/flutter_test.dart';
 

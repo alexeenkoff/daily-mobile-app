@@ -1,5 +1,5 @@
 import 'package:corsac_jwt/corsac_jwt.dart';
-import 'package:daily_mobile_app/src/domain/entities/auth_rediredct_result.dart';
+import 'package:daily_mobile_app/src/domain/entities/auth/auth_rediredct_result.dart';
 
 abstract class RedirectUrlParser {
   AuthRedirectResult parseUrl(String url);

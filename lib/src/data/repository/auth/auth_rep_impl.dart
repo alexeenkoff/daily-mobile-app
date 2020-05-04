@@ -3,12 +3,10 @@ import 'dart:core';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
-import 'package:flutter/foundation.dart';
 
 import 'package:daily_mobile_app/src/data/repository/auth/redirect_url_parser.dart';
-import 'package:daily_mobile_app/src/data/repository/auth/web_auth_url_provider.dart';
-import 'package:daily_mobile_app/src/domain/entities/auth_rediredct_result.dart';
-import 'package:daily_mobile_app/src/domain/entities/code_challenge.dart';
+import 'package:daily_mobile_app/src/domain/entities/auth/auth_rediredct_result.dart';
+import 'package:daily_mobile_app/src/domain/entities/auth/code_challenge.dart';
 import 'package:daily_mobile_app/src/domain/interfaces/auth_repository.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
