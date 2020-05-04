@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:daily_mobile_app/src/api/model/auth_response.dart';
 import 'package:daily_mobile_app/src/api/model/popular_tag_response.dart';
 import 'package:daily_mobile_app/src/api/model/post_response.dart';
 import 'package:daily_mobile_app/src/api/model/publication_response.dart';
@@ -56,6 +57,16 @@ class ApiClientImpl implements ApiClient {
         return Future.value(
             resultJson.map((json) => TagResponse.fromJson(json)).toList());
       });
+    });
+  }
+
+  @override
+  Future<AuthResponse> authenticate(Map<String, dynamic> payload) {
+    return http
+        .post(_baseUrl + 'auth/authenticate', body: json.jsonEncode(payload))
+        .then((response) {
+      final jsonResult = json.jsonDecode(response.body) as Map<String, dynamic>;
+      return Future.value(AuthResponse.fromJson(jsonResult));
     });
   }
 }

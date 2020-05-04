@@ -3,6 +3,8 @@ import 'dart:core';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
+import 'package:daily_mobile_app/src/api/api_client.dart';
+import 'package:daily_mobile_app/src/api/model/auth_response.dart';
 
 import 'package:daily_mobile_app/src/data/repository/auth/redirect_url_parser.dart';
 import 'package:daily_mobile_app/src/domain/entities/auth/auth_rediredct_result.dart';
@@ -11,11 +13,12 @@ import 'package:daily_mobile_app/src/domain/interfaces/auth_repository.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final RedirectUrlParser _redirectUrlParser;
+  final ApiClient _apiClient;
 
-  AuthRepositoryImpl(this._redirectUrlParser);
+  AuthRepositoryImpl(this._redirectUrlParser, this._apiClient);
 
   @override
-  AuthRedirectResult parseRedirectUrl(String url) {
+  AuthRedirect parseRedirectUrl(String url) {
     return _redirectUrlParser.parseUrl(url);
   }
 
@@ -44,5 +47,10 @@ class AuthRepositoryImpl extends AuthRepository {
         .replaceAll('/', '_')
         .replaceAll('=', '');
     return CodeChallenge(verifier, challenge);
+  }
+
+  @override
+  AuthResponse authenticate(String codeChallenge, AuthRedirect redirect) {
+    return null;
   }
 }

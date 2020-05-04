@@ -2,12 +2,12 @@ import 'package:corsac_jwt/corsac_jwt.dart';
 import 'package:daily_mobile_app/src/domain/entities/auth/auth_rediredct_result.dart';
 
 abstract class RedirectUrlParser {
-  AuthRedirectResult parseUrl(String url);
+  AuthRedirect parseUrl(String url);
 }
 
 class GitHubUrlParser extends RedirectUrlParser {
   @override
-  AuthRedirectResult parseUrl(String url) {
+  AuthRedirect parseUrl(String url) {
     final uri = Uri.dataFromString(url);
     final provider = uri.queryParameters['provider'];
     final jwtCode = uri.queryParameters['code'];
@@ -18,7 +18,7 @@ class GitHubUrlParser extends RedirectUrlParser {
     final iat = parsedToken.getClaim('iat');
     final aud = parsedToken.getClaim('aud');
     final iss = parsedToken.getClaim('iss');
-    return AuthRedirectResult(
+    return AuthRedirect(
         provider, providerCode, exp, codeChallenge, iat, aud, iss);
   }
 }

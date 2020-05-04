@@ -1,4 +1,4 @@
-class AuthRedirectResult {
+class AuthRedirect {
   final String provider;
   final String providerCode;
   final double exp;
@@ -7,6 +7,6 @@ class AuthRedirectResult {
   final String aud;
   final String iss;
 
-  AuthRedirectResult(this.provider, this.providerCode, this.exp,
-      this.codeChallenge, this.iat, this.aud, this.iss);
+  AuthRedirect(this.provider, this.providerCode, this.exp, this.codeChallenge,
+      this.iat, this.aud, this.iss);
 }

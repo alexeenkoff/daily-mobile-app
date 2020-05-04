@@ -7,7 +7,7 @@ void main() {
     String url =
         'moz-extension://f86cc5f4-01cb-9542-8c9c-41bde03d68b5/index.html?provider=github&code=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1ODgzMzk0NDYuNDU1LCJwcm92aWRlckNvZGUiOiI0YTIyYjBkOWQ3MzU4YWJhMDZhYiIsInByb3ZpZGVyIjoiZ2l0aHViIiwiY29kZUNoYWxsZW5nZSI6IlFabnd0TXFPcHpYM0ZRd3ZfZDZ3MXU5c0s5bjVxZ19vYWlRSVJyamN5WkUiLCJpYXQiOjE1ODgzMzkzODYsImF1ZCI6IkRhaWx5IiwiaXNzIjoiRGFpbHkgQVBJIn0.SdZu1O9DFULGVrYFKg_ByphNaOZPzC2JojpZmx9KAjI';
     final parser = GitHubUrlParser();
-    final AuthRedirectResult result = parser.parseUrl(url);
+    final AuthRedirect result = parser.parseUrl(url);
     assert(result != null);
     assert(result.provider == 'github');
     assert(result.providerCode == '4a22b0d9d7358aba06ab');
