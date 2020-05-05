@@ -1,4 +1,5 @@
 import 'package:corsac_jwt/corsac_jwt.dart';
+import 'package:daily_mobile_app/src/Env.dart';
 import 'package:daily_mobile_app/src/domain/entities/auth/auth_rediredct_result.dart';
 
 class AuthCodeConverter {
@@ -15,7 +16,7 @@ class AuthCodeConverter {
       ..setClaim('provider', _redirect.provider)
       ..setClaim('codeChallenge', _redirect.codeChallenge)
       ..getToken();
-    final signer = new JWTHmacSha256Signer('|r+.2!!!.Qf_-|63*%.D');
+    final signer = new JWTHmacSha256Signer(Env.jwtHash);
     final signedToken = token.getSignedToken(signer);
     return signedToken.toString();
   }
