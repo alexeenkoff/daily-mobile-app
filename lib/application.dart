@@ -33,7 +33,8 @@ class Application extends StatelessWidget {
           Inject<TagStorageRepository>(() => TagStorageRepositoryImpl()),
           Inject<PostsRestRepository>(
               () => PostsRestRepositoryImpl(Injector.get<ApiClient>())),
-          Inject<AuthRepository>(() => AuthRepositoryImpl(GitHubUrlParser())),
+          Inject<AuthRepository>(() =>
+              AuthRepositoryImpl(GitHubUrlParser(), Injector.get<ApiClient>())),
 
           /*Services*/
           Inject<TagService>(() => TagService(
