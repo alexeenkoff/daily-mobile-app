@@ -45,12 +45,7 @@ class _TagsPageState extends State<TagsPage> {
                         int selectedCount =
                             tagServiceRM.state.selectedTags?.length ?? 0;
                         return Expanded(
-                          flex: 1,
-                          child: TagCounter(
-                            key: Key('tagCounter $selectedCount'),
-                            count: selectedCount,
-                          ),
-                        );
+                            flex: 1, child: TagCounter(count: selectedCount));
                       },
                     ),
                     Container(margin: EdgeInsets.only(left: 8, right: 8)),
