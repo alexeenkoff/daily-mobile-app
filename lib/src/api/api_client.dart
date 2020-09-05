@@ -10,5 +10,6 @@ abstract class ApiClient implements PostsClient {
 
   Future<List<TagResponse>> searchTags(String query);
 
-  Future<AuthResponse> authenticate(Map<String, dynamic> payload);
+  Future<AuthResponse> authenticate(
+      String authCookie, Map<String, dynamic> payload);
 }

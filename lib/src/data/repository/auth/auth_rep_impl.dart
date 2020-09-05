@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
 import 'package:daily_mobile_app/src/api/api_client.dart';
 import 'package:daily_mobile_app/src/api/model/auth_response.dart';
+import 'package:daily_mobile_app/src/data/repository/auth/auth_code_converter.dart';
 
 import 'package:daily_mobile_app/src/data/repository/auth/redirect_url_parser.dart';
 import 'package:daily_mobile_app/src/domain/entities/auth/auth_rediredct_result.dart';
@@ -27,7 +28,7 @@ class AuthRepositoryImpl extends AuthRepository {
     final random = Random.secure();
     final list = Uint32List(32);
     for (int x = 0; x < list.length; x++) {
-      list[x] = random.nextInt(1000000000);
+      list[x] = random.nextInt(1<<32);
     }
     final verifier = List.generate(list.length, (index) {
       var radixString = '0' + list[index].toRadixString(16);
@@ -50,7 +51,9 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  AuthResponse authenticate(String codeChallenge, AuthRedirect redirect) {
-    return null;
+  Future<AuthResponse> authenticate(String verifier, AuthRedirect redirect) {
+    final jwtCode = AuthCodeConverter(redirect).convert();
+    return _apiClient
+        .authenticate('', {'code': jwtCode, 'code_verifier': verifier});
   }
 }

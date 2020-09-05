@@ -25,9 +25,11 @@ class AuthService {
         _webAuthUrlProvider.getUrl(provider, _codeChallenge.value().challenge);
   }
 
-  void loadPageSuccess(String url) {
+  void loadPageSuccess(String url) async {
     if (url.contains(_mozillaExtensionFormat)) {
       final redirect = _authRepository.parseRedirectUrl(url);
+      final authResponse = await _authRepository.authenticate(
+          _codeChallenge.value().verifier, redirect);
       final x = 0;
     }
   }

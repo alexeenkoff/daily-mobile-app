@@ -7,8 +7,7 @@ abstract class AuthRepository {
 
   CodeChallenge generateChallenge();
 
-  AuthResponse authenticate(String codeChallenge, AuthRedirect redirect);
-
+  Future<AuthResponse> authenticate(String verifier, AuthRedirect redirect);
 }
 
 enum Provider { github, google }

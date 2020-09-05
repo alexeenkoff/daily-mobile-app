@@ -61,9 +61,11 @@ class ApiClientImpl implements ApiClient {
   }
 
   @override
-  Future<AuthResponse> authenticate(Map<String, dynamic> payload) {
+  Future<AuthResponse> authenticate(
+      String authCookie, Map<String, dynamic> payload) {
     return http
-        .post(_baseUrl + 'auth/authenticate', body: json.jsonEncode(payload))
+        .post(_baseUrl + 'auth/authenticate',
+           /* headers: {"Cookie": authCookie},*/ body: payload)
         .then((response) {
       final jsonResult = json.jsonDecode(response.body) as Map<String, dynamic>;
       return Future.value(AuthResponse.fromJson(jsonResult));
