@@ -45,11 +45,14 @@ class _PostsPageState extends State<PostsPage> {
             // ignore: missing_return
             onError: ((_) => Container()),
             //TODO
-            onData: ((service) => ListView.builder(
+            onData: ((service) => ListView.separated(
+                  padding: const EdgeInsets.only(top: 20),
                   itemCount: postsServiceRM.value.posts.length,
                   itemBuilder: (context, index) {
                     return PostsItem(postsServiceRM.value.posts[index]);
                   },
+                  separatorBuilder: (BuildContext context, int index) =>
+                      Padding(padding: EdgeInsets.only(top: 15),),
                   controller: _controller,
                 )),
           ),
