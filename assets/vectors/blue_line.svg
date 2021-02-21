@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="449px" height="352px" viewBox="0 0 449 352" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>Line2</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="64.1435007%" x2="100%" y2="35.8564993%" id="linearGradient-1">
+            <stop stop-color="#AD20FF" offset="0%"></stop>
+            <stop stop-color="#4801F5" offset="100%"></stop>
+        </linearGradient>
+        <path d="M1129.34088,955.769298 C1118.81646,961.604806 1105.55382,957.798091 1099.72096,947.272208 L1089.15718,928.208996 L1351.94384,800.104699 C1362.46826,794.269191 1375.7309,798.075907 1381.56377,808.601789 L1392.12755,827.665002 L1129.34088,955.769298 Z" id="path-2"></path>
+        <filter x="-55.4%" y="-86.9%" width="210.7%" height="298.6%" filterUnits="objectBoundingBox" id="filter-3">
+            <feMorphology radius="10" operator="dilate" in="SourceAlpha" result="shadowSpreadOuter1"></feMorphology>
+            <feOffset dx="0" dy="20" in="shadowSpreadOuter1" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="40" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.282352941   0 0 0 0 0.00392156863   0 0 0 0 0.960784314  0 0 0 0.16 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Website" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Desktop-HD" transform="translate(-991.000000, -722.000000)">
+            <g id="Line2">
+                <use fill="black" fill-opacity="1" filter="url(#filter-3)" xlink:href="#path-2"></use>
+                <use fill="url(#linearGradient-1)" fill-rule="evenodd" xlink:href="#path-2"></use>
+            </g>
+        </g>
+    </g>
+</svg>

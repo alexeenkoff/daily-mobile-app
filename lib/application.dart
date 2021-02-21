@@ -7,6 +7,7 @@ import 'package:daily_mobile_app/src/data/service/posts/posts_service.dart';
 import 'package:daily_mobile_app/src/data/service/tag/tag_service.dart';
 import 'package:daily_mobile_app/src/domain/interfaces/posts_repository.dart';
 import 'package:daily_mobile_app/src/domain/interfaces/tag_repositoty.dart';
+import 'package:daily_mobile_app/src/ui/login/login_screen.dart';
 import 'package:daily_mobile_app/src/ui/posts/posts_screen.dart';
 import 'package:daily_mobile_app/src/ui/tags/tags_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,7 +42,8 @@ class Application extends StatelessWidget {
               title: 'Daily',
               theme: appTheme(),
               routes: {
-                Routes.tags: (context) => TagsPage(),
+                Routes.tags: (context) => LoginScreenDesign(),
+//                Routes.tags: (context) => TagsPage(),
                 Routes.posts: (_) => PostsPage(),
 //                Routes.splash: (context) => SplashPage()
               },
@@ -53,4 +55,5 @@ class Routes {
   static final tags = '/';
   static final splash = '/';
   static final posts = '/posts';
+
 }
